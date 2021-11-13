@@ -1,0 +1,265 @@
+#Screen manager containing all available screens
+SManager:
+    MainMenu:
+    Capitals:
+    Flags:
+    Continents:
+    Options:
+
+
+<MainMenu>
+    name: 'MainScreen'
+
+    #View containing list with available options.
+    #To be replaced with buttons.
+    ScrollView:
+        size_hint: (1,0.8)
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        MDList:
+            size_hint:(0.8,0.8)
+            pos_hint:{'center_x':0.5,'center_y':0.5}
+            halign: 'center'
+
+            OneLineIconListItem:
+                text:'Capitals Quiz'
+                on_press: root.manager.current = 'CapitalsScreen'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.bot_bar.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
+                IconLeftWidget:
+                    icon:'android'
+                
+            OneLineIconListItem:
+                text:'Flags Quiz'
+                on_press: root.manager.current = 'FlagsScreen'; app.pick_flag()
+                IconLeftWidget:
+                    icon:'flag'
+            OneLineIconListItem:
+                text:'Continents Quiz'
+                on_press: root.manager.current = 'ContinentsScreen'; app.pick_country(2)
+                IconLeftWidget:
+                    icon:'android'
+            OneLineIconListItem:
+                text:'Theme settings'
+                on_press: root.manager.current = 'OptionsScreen'; app.color_picker()
+                IconLeftWidget:
+                    icon:'application-cog'
+
+<Capitals>
+    name: 'CapitalsScreen'
+
+    MDIconButton:
+        icon: 'backspace-outline'
+        on_press: root.manager.current = 'MainScreen'
+        pos_hint:{'center_y':0.95}
+    
+    MDLabel:
+        id:correct_answers
+        text:'Correct answers: 0'
+        halign:'center'
+        pos_hint:{'center_x':0.5,'center_y':0.6}
+
+    MDLabel:
+        id:ca_streak
+        text:'Current streak: 0'
+        halign:'center'    
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+
+    MDLabel:
+        id: question
+        text: 'What is the capital of: '
+        pos_hint:{'center_x':0.5,'center_y':0.29}
+        halign: 'center'
+
+    MDTextFieldRound:
+        id: answer
+        pos_hint:{'center_x':0.5,'center_y':0.21}
+        size_hint:(0.4,0.1)
+        halign:'center'
+
+    MDBoxLayout:
+        orientation:'vertical'
+        MDBottomAppBar:
+            MDToolbar:
+                id: bot_bar
+                icon: 'forward'
+                type: 'bottom'
+                title: 'Score: 0'
+                on_action_button: app.check_answer(); app.pick_country(0);
+
+    #Animation image displayed after correct answer
+    #Image:
+     #   id: gif
+     #   source: ''
+     #   center: self.parent.center
+     #   size: 50, 50
+     #   size_hint: (0.2,0.2)
+     #   allow_stretch: True
+     #   anim_delay: -1
+     #   anim_loop: 1
+     #   opacity: 0
+        
+
+<Flags>
+    name: 'FlagsScreen'
+
+    MDIconButton:
+        icon: 'backspace-outline'
+        on_press: root.manager.current = 'MainScreen'
+        pos_hint:{'center_y':0.95}
+
+    MDLabel:
+        id: flag_score
+        text: 'Score: 0'
+        halign:'center'
+        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.2,'center_y':0.9}
+    
+    MDLabel:
+        id: flag_ca
+        text: 'Correct answers: 0'
+        halign:'center'
+        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.45,'center_y':0.9}
+    
+    MDLabel:
+        id: flag_streak
+        text: 'Current streak: 0'
+        halign:'center'
+        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.70,'center_y':0.9}
+
+    MDLabel:
+        id: what_country_flag
+        text: 'What is the flag of: '
+        halign:'center'
+        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.5,'center_y':0.55}
+
+    #Top left flag
+    Image: 
+        id:country0
+        pos_hint:{'center_x':0.16, 'center_y':0.7}
+        size_hint: (0.2,0.15)
+        source: 'flags/finland_flag-jpg-xs.jpg'
+    Button: 
+        pos_hint:{'center_x':0.16, 'center_y':0.7}
+        size_hint: (0.2,0.15)
+        on_press: app.check_flag(0)
+        opacity:0
+
+    #Top right flag
+    Image:  
+        id:country1
+        pos_hint:{'center_x':0.84, 'center_y':0.7}
+        size_hint: (0.2,0.15)
+        source: 'flags/finland_flag-jpg-xs.jpg'
+    Button: 
+        pos_hint:{'center_x':0.84, 'center_y':0.7}
+        size_hint: (0.2,0.15)
+        on_press: app.check_flag(1)
+        opacity:0
+
+    #Bottom left flag
+    Image:  
+        id:country2
+        pos_hint:{'center_x':0.16, 'center_y':0.4}
+        size_hint: (0.2,0.15)
+        source: 'flags/finland_flag-jpg-xs.jpg'
+    Button: 
+        pos_hint:{'center_x':0.16, 'center_y':0.4}
+        size_hint: (0.2,0.15)
+        on_press: app.check_flag(2)
+        opacity:0
+
+    #Bottom right flag
+    Image:  
+        id:country3
+        pos_hint:{'center_x':0.84, 'center_y':0.4}
+        size_hint: (0.2,0.15)
+        source: 'flags/finland_flag-jpg-xs.jpg'
+    Button: 
+        pos_hint:{'center_x':0.84, 'center_y':0.4}
+        size_hint: (0.2,0.15)
+        on_press: app.check_flag(3)
+        opacity:0
+
+#Definition of tile, later used in continents quiz mode grid layout.
+<ContinentTile@SmartTileWithStar>
+    size_hint_y: None
+    height: "240dp"
+<Continents>
+    name: 'ContinentsScreen'
+
+    MDIconButton:
+        icon: 'backspace-outline'
+        on_press: root.manager.current = 'MainScreen'
+        pos_hint:{'center_y':0.95}
+    
+    MDLabel:
+        id: continent_question
+        text:'On which continent lies '
+        halign:'center'
+        pos_hint:{'center_x':0.5,'center_y':0.9}
+    
+    MDLabel:
+        id: conti_score
+        text:'Score: 0'
+        halign:'center'
+        pos_hint:{'center_x':0.2,'center_y':0.85}
+    
+    MDLabel:
+        id: conti_correct
+        text:'Correct answers: 0'
+        halign:'center'
+        pos_hint:{'center_x':0.5,'center_y':0.85}
+    
+    MDLabel:
+        id: conti_streak
+        text:'Current streak: 0'
+        halign:'center'
+        pos_hint:{'center_x':0.8,'center_y':0.85}
+    
+    MDGridLayout:
+        cols:3
+        rows:2
+        adaptive_height: True
+        #padding: dp(4), dp(4)
+        spacing: dp(4) 
+
+        ContinentTile:
+            id: africa
+            source:'data/continents/Africa.jpg' 
+            on_release: app.check_continent(0);app.pick_country(2)
+            
+            text:"Africa"
+        ContinentTile:
+            id: asia
+            source:'data/continents/Asia.jpg'
+            on_release: app.check_continent(1);app.pick_country(2)
+            text:"Asia"
+        ContinentTile:
+            id: europe
+            source:'data/continents/Europe.jpg' 
+            on_release: app.check_continent(2);app.pick_country(2)
+            text:"Europe"
+        ContinentTile:
+            id: na
+            source:'data/continents/North America.gif' 
+            on_release: app.check_continent(3);app.pick_country(2)
+            text:"North America"
+        ContinentTile:
+            id: oceania
+            source:'data/continents/Oceania.jpg' 
+            on_release: app.check_continent(4);app.pick_country(2)
+            text:"Oceania"
+        ContinentTile:
+            id: sa
+            source:'data/continents/South America.jpg' 
+            on_release: app.check_continent(5);app.pick_country(2)
+            text:"South America"
+
+<Options>
+    name: 'OptionsScreen'
+    
+    MDIconButton:
+        icon: 'backspace-outline'
+        on_press: root.manager.current = 'MainScreen'
+        pos_hint:{'center_y':0.95}
