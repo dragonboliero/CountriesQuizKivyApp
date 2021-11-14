@@ -1,9 +1,10 @@
 '''
 To do list:
-    *Make score and streaks reset after starting a new game another time.
+    *Adjust buttons size in main menu.
     *Change size of flags displayed in flags quiz, as now they are look
     small on smartphone.
-    *Change main menu from list to buttons and find icons for categories.
+    *Add score multipliers achieved with score streaks.
+    *Find icons for categories.
     *Redesign capitals quiz screen. Now keyboard obscures input window                          sdaasdd                sdasdsd
     and bottom bar.
     *Change algorythm for questions. Instead of constant random vales, remove
