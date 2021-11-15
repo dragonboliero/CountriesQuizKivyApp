@@ -1,10 +1,12 @@
 '''
 To do list:
-    *Adjust buttons size in main menu.
+    *Adjust buttons size in main menu, so that all have the same width.
     *Change size of flags displayed in flags quiz, as now they are look
     small on smartphone.
     *Add score multipliers achieved with score streaks.
     *Find icons for categories.
+    *Redesign screens. Create a screen template class for quizes screens 
+    which will inherit from it.
     *Redesign capitals quiz screen. Now keyboard obscures input window                          sdaasdd                sdasdsd
     and bottom bar.
     *Change algorythm for questions. Instead of constant random vales, remove
@@ -80,6 +82,7 @@ class Options(Screen):
 # Main application class
 class CountriesQuiz(MDApp):
     def build(self):
+        self.theme_cls.primary_palette = "Indigo"
         # Setting up first values of screen variables
         self.score = 0
         self.contry_name = ''
@@ -348,5 +351,7 @@ class CountriesQuiz(MDApp):
     def go_to_main(self,picker_object):
         self.root.current = 'MainScreen'
 
+    def testing(self):
+        print(self.root.get_screen('MainScreen').ids.cq.size[0])
 # Running the app
 CountriesQuiz().run()
