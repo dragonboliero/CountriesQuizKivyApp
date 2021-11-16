@@ -1,14 +1,13 @@
 '''
 To do list:
     *Adjust buttons size in main menu, so that all have the same width.
-    *Change size of flags displayed in flags quiz, as now they are look
-    small on smartphone.
     *Add score multipliers achieved with score streaks.
     *Find icons for categories.
     *Redesign screens. Create a screen template class for quizes screens 
     which will inherit from it.
     *Redesign capitals quiz screen. Now keyboard obscures input window                          sdaasdd                sdasdsd
-    and bottom bar.
+    and bottom bar. (Need to check, problems with buildozer make the app 
+    unable to run on Android).
     *Change algorythm for questions. Instead of constant random vales, remove
     value from dictionary when it was used and place in temporary variable. 
     *Find images of continents outlines for continents quiz mode and adjust
@@ -27,6 +26,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.picker import MDThemePicker
+from kivy.core.window import Window
 
 # Dictionary with all data about countries
 c_dict = {}
@@ -53,6 +53,9 @@ def data_from_csv(countries_dict, country_number, country_number_counter):
 # Assigning data to appropriate variables
 data_from_csv(c_dict, c_number, c_number_counter)
 
+
+#This method makes device keyboard appear below main screen
+Window.softinput_mode = 'below_target'
 
 # ScreenManager and Screen classes
 class SManager(ScreenManager):
@@ -91,7 +94,6 @@ class CountriesQuiz(MDApp):
         #Loading .kv file
         self.uix = Builder.load_file('uix.kv')
         return self.uix
-
 
     '''Method used in all modes for determining country used in current 
        question.(To be modified in the future)

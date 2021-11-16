@@ -131,54 +131,54 @@ SManager:
         id: what_country_flag
         text: 'What is the flag of: '
         halign:'center'
-        size_hint: (0.2,0.15)
-        pos_hint:{'center_x':0.5,'center_y':0.55}
+        size_hint: (1,0.15)
+        pos_hint:{'center_x':0.5,'center_y':0.5}
 
     #Top left flag
     Image: 
         id:country0
-        pos_hint:{'center_x':0.16, 'center_y':0.7}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.25, 'center_y':0.7}
+        size_hint: (0.4,0.3)
         source: 'flags/finland_flag-jpg-xs.jpg'
     Button: 
-        pos_hint:{'center_x':0.16, 'center_y':0.7}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.25, 'center_y':0.7}
+        size_hint: (0.4,0.3)
         on_press: app.check_flag(0)
         opacity:0
 
     #Top right flag
     Image:  
         id:country1
-        pos_hint:{'center_x':0.84, 'center_y':0.7}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.75, 'center_y':0.7}
+        size_hint: (0.4,0.3)
         source: 'flags/finland_flag-jpg-xs.jpg'
     Button: 
-        pos_hint:{'center_x':0.84, 'center_y':0.7}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.75, 'center_y':0.7}
+        size_hint: (0.4,0.3)
         on_press: app.check_flag(1)
         opacity:0
 
     #Bottom left flag
     Image:  
         id:country2
-        pos_hint:{'center_x':0.16, 'center_y':0.4}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.25, 'center_y':0.25}
+        size_hint: (0.4,0.3)
         source: 'flags/finland_flag-jpg-xs.jpg'
     Button: 
-        pos_hint:{'center_x':0.16, 'center_y':0.4}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.25, 'center_y':0.25}
+        size_hint: (0.4,0.3)
         on_press: app.check_flag(2)
         opacity:0
 
     #Bottom right flag
     Image:  
         id:country3
-        pos_hint:{'center_x':0.84, 'center_y':0.4}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.75, 'center_y':0.25}
+        size_hint: (0.4,0.3)
         source: 'flags/finland_flag-jpg-xs.jpg'
     Button: 
-        pos_hint:{'center_x':0.84, 'center_y':0.4}
-        size_hint: (0.2,0.15)
+        pos_hint:{'center_x':0.75, 'center_y':0.25}
+        size_hint: (0.4,0.3)
         on_press: app.check_flag(3)
         opacity:0
 
