@@ -13,7 +13,6 @@ SManager:
     MDFillRoundFlatIconButton:
         icon: 'android'
         text:'Capitals Quiz'
-        halign: True
         on_press: root.manager.current = 'CapitalsScreen'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.bot_bar.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
         size_hint:(None,0.15)
         font_size: '30sp'

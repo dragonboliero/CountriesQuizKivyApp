@@ -5,14 +5,17 @@ To do list:
     *Find icons for categories.
     *Redesign screens. Create a screen template class for quizes screens 
     which will inherit from it.
-    *Redesign capitals quiz screen. Now keyboard obscures input window                          sdaasdd                sdasdsd
-    and bottom bar. (Need to check, problems with buildozer make the app 
-    unable to run on Android).
+    *Investigate why images in flags quiz mode don't scale properly on 
+     Android.
+    *Currently data picker doesn't work in Android build. There's an error
+     stating that there is no such module (Need a solutoon).
+    *Make the app working in the background.
     *Change algorythm for questions. Instead of constant random vales, remove
     value from dictionary when it was used and place in temporary variable. 
     *Find images of continents outlines for continents quiz mode and adjust
     them to fit them properly in grid tiles.
     *Add animaiton + sound appearing after an answer. (To be considered)
+
 '''
 
 #!/usr/bin/python3
@@ -25,7 +28,7 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.picker import MDThemePicker
+#from kivymd.uix.picker import MDThemePicker
 from kivy.core.window import Window
 
 # Dictionary with all data about countries
@@ -55,7 +58,7 @@ data_from_csv(c_dict, c_number, c_number_counter)
 
 
 #This method makes device keyboard appear below main screen
-Window.softinput_mode = 'below_target'
+Window.softinput_mode = 'pan'
 
 # ScreenManager and Screen classes
 class SManager(ScreenManager):
@@ -346,8 +349,9 @@ class CountriesQuiz(MDApp):
 
     #Widget created when entering theme settings screen
     def color_picker(self):
-        c_picker = MDThemePicker(size_hint=(1,1), on_dismiss = self.go_to_main)
-        c_picker.open()
+        #c_picker = MDThemePicker(size_hint=(1,1), on_dismiss = self.go_to_main)
+        #c_picker.open()
+        print("Picker isn't working at the moment")
 
     #Method which allows to go back to main menu screen from theme settings
     def go_to_main(self,picker_object):
