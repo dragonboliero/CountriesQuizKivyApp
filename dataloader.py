@@ -12,3 +12,4 @@ def data_from_csv(countries_dict, country_number, country_number_counter):
             #Assigning country to number
             country_number[country_number_counter] = country
             country_number_counter += 1
+            
