@@ -34,6 +34,9 @@ from kivymd.uix.dialog import MDDialog
 from kivy.core.window import Window
 from kivymd.uix.snackbar import Snackbar
 
+
+# Background_color
+
 # Dictionary with all data about countries
 c_dict = {}
 # Dictionary assigning number to each country
@@ -48,30 +51,33 @@ dt.data_from_csv(c_dict, c_number, c_number_counter)
 # This method makes device keyboard appear below main screen
 Window.softinput_mode = 'pan'
 
+
 # ScreenManager and Screen classes
-
-
 class SManager(ScreenManager):
     pass
 
 
-class MainMenu(Screen):
+class TemplateScreen(Screen):
     pass
 
 
-class Capitals(Screen):
+class MainMenu(TemplateScreen):
     pass
 
 
-class Flags(Screen):
+class Capitals(TemplateScreen):
     pass
 
 
-class Continents(Screen):
+class Flags(TemplateScreen):
     pass
 
 
-class Options(Screen):
+class Continents(TemplateScreen):
+    pass
+
+
+class Options(TemplateScreen):
     pass
 
 
@@ -84,6 +90,7 @@ class CountriesQuiz(MDApp):
         self.contry_name = ''
         self.correct_answers = 0
         self.answer_streak = 0
+        self.bg_color = (78/255, 99/255, 194/255, 1)
         # Loading .kv file
         self.uix = Builder.load_file('uix.kv')
         return self.uix

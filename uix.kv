@@ -5,17 +5,26 @@ SManager:
     Flags:
     Continents:
     Options:
+    TemplateScreen:
 
+<TemplateScreen>
+    name: 'TemplateScreen'
+    MDCard:
+        size_hint: (1,1)
+        pos_hint: {"center_x":0.5,"center_y":0.5}
+        md_bg_color: app.bg_color
 
+        
 <MainMenu>
     name: 'MainScreen'
-    
+   
     MDFillRoundFlatIconButton:
         icon: 'android'
         text:'Capitals Quiz'
         on_press: root.manager.current = 'CapitalsScreen'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.bot_bar.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
         size_hint:(None,0.15)
         font_size: '30sp'
+        elevation: 30
         pos_hint:{'center_x':0.5,'center_y':0.8}
 
     MDFillRoundFlatIconButton:
