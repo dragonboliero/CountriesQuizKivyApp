@@ -35,8 +35,6 @@ from kivy.core.window import Window
 from kivymd.uix.snackbar import Snackbar
 
 
-# Background_color
-
 # Dictionary with all data about countries
 c_dict = {}
 # Dictionary assigning number to each country
@@ -90,6 +88,7 @@ class CountriesQuiz(MDApp):
         self.contry_name = ''
         self.correct_answers = 0
         self.answer_streak = 0
+        # Default backgrund RGBA value
         self.bg_color = (78/255, 99/255, 194/255, 1)
         # Loading .kv file
         self.uix = Builder.load_file('uix.kv')
