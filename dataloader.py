@@ -1,6 +1,6 @@
 import csv
 # Function importing data from CSV file
-def data_from_csv(countries_dict, country_number, country_number_counter):
+def data_from_csv(countries_dict, country_number, country_number_counter, list_of_countries):
     with open("data/countries_data.csv", "r") as file:
         csv_data = csv.reader(file)
         for row in csv_data:
@@ -12,4 +12,6 @@ def data_from_csv(countries_dict, country_number, country_number_counter):
             #Assigning country to number
             country_number[country_number_counter] = country
             country_number_counter += 1
+        list_of_countries = list(countries_dict.keys())
+        return list_of_countries
             
