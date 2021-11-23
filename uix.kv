@@ -49,7 +49,7 @@ SManager:
     MDFillRoundFlatIconButton:
         icon: 'android'
         text:'Capitals Quiz'
-        on_press: root.manager.current = 'CapitalsScreen'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; app.pick_country(0); root.manager.get_screen('CapitalsScreen').ids.bot_bar.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
+        on_press: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
         pos_hint:{'center_x':0.5,'center_y':0.8}
 
     MDFillRoundFlatIconButton:
@@ -60,7 +60,7 @@ SManager:
 
     MDFillRoundFlatIconButton:
         text:'Continents Quiz'
-        on_press: root.manager.current = 'ContinentsScreen'; app.pick_country(2);root.manager.get_screen('ContinentsScreen').ids.conti_score.text='Score: 0';root.manager.get_screen('ContinentsScreen').ids.conti_correct.text='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.conti_streak.text='Current streak: 0';
+        on_press: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.conti_score.text='Score: 0';root.manager.get_screen('ContinentsScreen').ids.conti_correct.text='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.conti_streak.text='Current streak: 0';
         icon:'android'
         pos_hint:{'center_x':0.5,'center_y':0.44}
 
@@ -105,7 +105,7 @@ SManager:
                 icon: 'forward'
                 type: 'bottom'
                 title: 'Score: 0'
-                on_action_button: app.check_answer(); app.pick_country(0);
+                on_action_button: app.check_answer(); app.assign_country_to_label(0);
 
     #Animation image displayed after correct answer
     #Image:
@@ -227,33 +227,33 @@ SManager:
         ContinentTile:
             id: africa
             source:'data/continents/Africa.jpg' 
-            on_release: app.check_continent(0);app.pick_country(2)
+            on_release: app.check_continent(0);app.assign_country_to_label(2)
             
             text:"Africa"
         ContinentTile:
             id: asia
             source:'data/continents/Asia.jpg'
-            on_release: app.check_continent(1);app.pick_country(2)
+            on_release: app.check_continent(1);app.assign_country_to_label(2)
             text:"Asia"
         ContinentTile:
             id: europe
             source:'data/continents/Europe.jpg' 
-            on_release: app.check_continent(2);app.pick_country(2)
+            on_release: app.check_continent(2);app.assign_country_to_label(2)
             text:"Europe"
         ContinentTile:
             id: na
             source:'data/continents/North America.gif' 
-            on_release: app.check_continent(3);app.pick_country(2)
+            on_release: app.check_continent(3);app.assign_country_to_label(2)
             text:"North America"
         ContinentTile:
             id: oceania
             source:'data/continents/Oceania.jpg' 
-            on_release: app.check_continent(4);app.pick_country(2)
+            on_release: app.check_continent(4);app.assign_country_to_label(2)
             text:"Oceania"
         ContinentTile:
             id: sa
             source:'data/continents/South America.jpg' 
-            on_release: app.check_continent(5);app.pick_country(2)
+            on_release: app.check_continent(5);app.assign_country_to_label(2)
             text:"South America"
 
 <Options>

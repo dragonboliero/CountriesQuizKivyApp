@@ -1,5 +1,7 @@
 '''
 To do list:
+    *Make redundant flags invisible in flags quiz mode when there are
+    less than 4 countries left.
     *Adjust buttons size in main menu, so that all have the same width.
     *Add score multipliers achieved with score streaks.
     *Find icons for categories.
@@ -10,8 +12,6 @@ To do list:
     *Currently data picker doesn't work in Android build. There's an error
      stating that there is no such module (Need a solutoon).
     *Make the app working in the background.
-    *Change algorythm for questions. Instead of constant random vales, remove
-    value from dictionary when it was used and place in temporary variable. 
     *Find images of continents outlines for continents quiz mode and adjust
     them to fit them properly in grid tiles.
     *Add animaiton + sound appearing after an answer. (To be considered)
@@ -98,15 +98,10 @@ class CountriesQuiz(MDApp):
 
 
     '''Method used in all modes for determining country used in current 
-       question.(To be modified in the future)
+       question.
     '''
-    def pick_country(self, mode_number):
-        
-        """ Old function
-        country_picker = random.randrange(0, 196)
-        self.country_name = c_number[country_picker]
-        self.country_chosen = self.country_name
-        """
+    def pick_country(self):
+
         self.country_name = ""
         #If there are no more countries from the list, assign all of them
         #to the list.
@@ -115,9 +110,17 @@ class CountriesQuiz(MDApp):
         #Proceed if there are still countries to choose from 
         if len(countries_list) > 0:
             self.country_name = random.choice(countries_list)
-            print(f"Chosen country: {self.country_name}?")
+            print(f"Chosen country: {self.country_name}")
             print(f"No of countries still in dictionary{len(countries_list)}\n")
 
+        return self.country_name
+
+
+    '''Method used to assign chosen country to question label in capitals 
+       and continents quiz modes.
+    '''
+    def assign_country_to_label(self, mode_number):
+        self.country_name = self.pick_country()
         if mode_number == 0:
             self.text_to_display = "What is the capital of {}?".format(
                 self.country_name)
@@ -256,15 +259,12 @@ class CountriesQuiz(MDApp):
 
     # Used only in flags quiz mode.
     def pick_flag(self):
-        country_picker = random.randrange(0, 196)
-        self.flag_name = c_number[country_picker]
+        self.flag_name = self.pick_country()
         self.flag_chosen = self.flag_name
         self.text_to_display = "What is the flag of {}?".format(
             self.flag_name)
         self.root.get_screen(
             'FlagsScreen').ids.what_country_flag.text = self.text_to_display
-        # Randomly pick a place where flag with correct answer will be placed
-        correct_flag_place = random.randrange(0, 4)
         # Array holding all items displaying flags in this mode
         self.flag_position = [self.root.get_screen(
             'FlagsScreen').ids.country0, self.root.get_screen(
@@ -272,9 +272,30 @@ class CountriesQuiz(MDApp):
             'FlagsScreen').ids.country2,
             self.root.get_screen(
             'FlagsScreen').ids.country3]
+        
+        #Check how many countries are available and randomize appropriate
+        #number of countries.
+        countries_in_the_list = len(countries_list)
+        print(f"Total number of countries in the list {countries_in_the_list}")
+        countries_to_randomize = 0
+        if countries_in_the_list > 3:
+            countries_to_randomize = 3
+        elif countries_in_the_list == 3:
+            countries_to_randomize = 2
+        elif countries_in_the_list == 2:
+            countries_to_randomize = 1
+        elif countries_in_the_list == 1:
+            countries_to_randomize = 0
+
+        # Randomly pick a place where flag with correct answer will be placed
+        correct_flag_place = random.randrange(0, countries_to_randomize+1)
+
+        #List storing chosen countries
+        chosen_countries = []
+        chosen_countries.append(self.flag_name)
 
         # Assigning flag images to appropriate kivy widget
-        for i in range(0, 4):
+        for i in range(0, countries_to_randomize+1):
 
             # Correct answer flag
             if i == correct_flag_place:
@@ -287,11 +308,18 @@ class CountriesQuiz(MDApp):
                    flags may overlap as they are no removed from 
                    the list after being used. 
                 '''
-                random_flag = c_number[random.randrange(0, 196)]
+                
+                random_flag = self.pick_country()
+                while random_flag in chosen_countries:
+                    random_flag = self.pick_country()
+                chosen_countries.append(random_flag)
                 cf_path = 'data/flags/{}_flag-jpg-xs.jpg'.format(
                     random_flag.lower().replace(' ', '-'))
                 self.flag_position[i].source = cf_path
 
+        print(f'Countries on the list: {chosen_countries}')
+        #clear the list before ending the method        
+        chosen_countries.clear()
         return self.flag_chosen
 
 
@@ -302,6 +330,8 @@ class CountriesQuiz(MDApp):
 
         if flag_clicked == self.flag_chosen.lower():
             print('good answer')
+            print(f"removing {self.flag_chosen} from the list")
+            countries_list.remove(self.flag_chosen)
             add_ca = int(self.root.get_screen(
                 'FlagsScreen').ids.flag_ca.text[17:]) + 1
             self.root.get_screen('FlagsScreen').ids.flag_ca.text = self.root.get_screen(
