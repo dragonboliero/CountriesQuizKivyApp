@@ -1,9 +1,6 @@
 '''
 To do list:
-    *Make redundant flags invisible in flags quiz mode when there are
-    less than 4 countries left.
     *Adjust buttons size in main menu, so that all have the same width.
-    *Add score multipliers achieved with score streaks.
     *Find icons for categories.
     *Redesign screens. Create a screen template class for quizes screens 
     which will inherit from it.
@@ -111,7 +108,7 @@ class CountriesQuiz(MDApp):
         if len(countries_list) > 0:
             self.country_name = random.choice(countries_list)
             print(f"Chosen country: {self.country_name}")
-            print(f"No of countries still in dictionary{len(countries_list)}\n")
+            print(f"No of countries still in dictionary {len(countries_list)}\n")
 
         return self.country_name
 
@@ -154,9 +151,9 @@ class CountriesQuiz(MDApp):
             countries_list.remove(self.country_name)
             # Add +1 to correct answers, correct answers streak, points and
             # clear answer field
+            self.add_points(0)
             self.add_canswer()
             self.add_streak(True)
-            self.add_points(0)
             self.clear_answer_field()
             '''Testing animation displayed after correct answer, to be
                completed later.
@@ -197,24 +194,35 @@ class CountriesQuiz(MDApp):
        variable breaks this function. (To be investigated)
     '''
     def add_points(self, mode_number):
+        points_to_add = 10
+        streak_modifier = 10
         # Capitals
         if mode_number == 0:
+            #Calculates score multiplier based on current streak
+            points_to_add += (streak_modifier * int(self.root.get_screen
+                ('CapitalsScreen').ids.ca_streak.text[15:]))
             self.score = int(self.root.get_screen(
-                'CapitalsScreen').ids.bot_bar.title[7:]) + 100
+                'CapitalsScreen').ids.bot_bar.title[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
                 'CapitalsScreen').ids.bot_bar.title = score_text
         # Flags
         if mode_number == 1:
+            #Calculates score multiplier based on current streak
+            points_to_add += (streak_modifier * int(self.root.get_screen(
+                'FlagsScreen').ids.flag_streak.text[15:]))
             self.score = int(self.root.get_screen(
-                'FlagsScreen').ids.flag_score.text[7:]) + 100
+                'FlagsScreen').ids.flag_score.text[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
                 'FlagsScreen').ids.flag_score.text = score_text
         # Continents
         if mode_number == 2:
+            #Calculates score multiplier based on current streak
+            points_to_add += (streak_modifier * int(self.root.get_screen(
+                'ContinentsScreen').ids.conti_streak.text[16:]))
             self.score = int(self.root.get_screen(
-                'ContinentsScreen').ids.conti_score.text[7:]) + 100
+                'ContinentsScreen').ids.conti_score.text[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
                 'ContinentsScreen').ids.conti_score.text = score_text
@@ -282,10 +290,25 @@ class CountriesQuiz(MDApp):
             countries_to_randomize = 3
         elif countries_in_the_list == 3:
             countries_to_randomize = 2
+            self.root.get_screen(
+            'FlagsScreen').ids.country3.opacity = 0
         elif countries_in_the_list == 2:
             countries_to_randomize = 1
+            self.root.get_screen(
+            'FlagsScreen').ids.country2.opacity = 0
         elif countries_in_the_list == 1:
             countries_to_randomize = 0
+            self.root.get_screen(
+            'FlagsScreen').ids.country1.opacity = 0
+
+        #Make all flags visible again after reloading countries list
+        if countries_in_the_list == len(c_dict.keys()):
+            self.root.get_screen(
+            'FlagsScreen').ids.country1.opacity = 1
+            self.root.get_screen(
+            'FlagsScreen').ids.country2.opacity = 1
+            self.root.get_screen(
+            'FlagsScreen').ids.country3.opacity = 1                                    
 
         # Randomly pick a place where flag with correct answer will be placed
         correct_flag_place = random.randrange(0, countries_to_randomize+1)
@@ -332,6 +355,7 @@ class CountriesQuiz(MDApp):
             print('good answer')
             print(f"removing {self.flag_chosen} from the list")
             countries_list.remove(self.flag_chosen)
+            self.add_points(1)
             add_ca = int(self.root.get_screen(
                 'FlagsScreen').ids.flag_ca.text[17:]) + 1
             self.root.get_screen('FlagsScreen').ids.flag_ca.text = self.root.get_screen(
@@ -342,7 +366,6 @@ class CountriesQuiz(MDApp):
             self.root.get_screen('FlagsScreen').ids.flag_streak.text = self.root.get_screen(
                 'FlagsScreen').ids.flag_streak.text[:15] + str(add_streak)
             print(add_ca)
-            self.add_points(1)
         else:
             print('wrong answer')
             self.root.get_screen('FlagsScreen').ids.flag_streak.text = self.root.get_screen(
