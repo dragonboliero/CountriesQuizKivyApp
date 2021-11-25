@@ -474,7 +474,7 @@ class CountriesQuiz(MDApp):
 
 
     def testing(self):
-        print(self.root.get_screen('MainScreen').ids.cq.size[0])
+        print("testing")
 
 
 # Running the app

@@ -45,31 +45,79 @@ SManager:
 
 <MainMenu>
     name: 'MainScreen'
-   
-    MDFillRoundFlatIconButton:
-        icon: 'android'
-        text:'Capitals Quiz'
-        on_press: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
-        pos_hint:{'center_x':0.5,'center_y':0.8}
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDBoxLayout:
+            orientation:'vertical'
+            size_hint_y:0.25
+            MDLabel:
+                text:"Countries Quiz App"
+                font_style:"H4"
+            AnchorLayout:
+                anchor_x: 'center'
+                Image:
+                    source:'data/icons/globe.png'
+                    size_hint:1,1
 
-    MDFillRoundFlatIconButton:
-        text:'Flags Quiz'
-        on_press: root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_score.text='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_ca.text='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_streak.text='Current streak: 0'
-        icon:'flag'
-        pos_hint:{'center_x':0.5,'center_y':0.62}
+        MDGridLayout:
+            size_hint_y: 0.65
+            columns:2
+            rows:2
+            padding: [dp(20),dp(20),dp(20),dp(20)]
+            spacing: dp(20)
+            MainMenuButton:
+                text:"Capitals"
+                subtext:"Guess all capitals of the world."
+                image:'data/icons/capitals_mode.png'
+                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
+            MainMenuButton:
+                text:"Flags"
+                subtext:"Do you know flags of all countries?"
+                image:'data/icons/flags_mode.png'
+                on_release: root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_score.text='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_ca.text='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_streak.text='Current streak: 0' 
+            MainMenuButton:
+                text:"Continents"
+                subtext:"Pick continents for all countries."
+                image:'data/icons/continents_mode.png'
+                on_release: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.conti_score.text='Score: 0';root.manager.get_screen('ContinentsScreen').ids.conti_correct.text='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.conti_streak.text='Current streak: 0';
+            MainMenuButton:
+                text:"Settings"
+                subtext:"Adjust application settings"
+                image:'data/icons/settings.png'
+                on_release: root.manager.current = 'OptionsScreen'; app.color_picker()
+        MDBoxLayout:
+            orientation:'vertical'
+            size_hint_y:0.10
+            MDLabel:
+                text:"Copyright© Wojciech Milczarek 2021"
+                font_style:'Overline'
 
-    MDFillRoundFlatIconButton:
-        text:'Continents Quiz'
-        on_press: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.conti_score.text='Score: 0';root.manager.get_screen('ContinentsScreen').ids.conti_correct.text='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.conti_streak.text='Current streak: 0';
-        icon:'android'
-        pos_hint:{'center_x':0.5,'center_y':0.44}
-
-    MDFillRoundFlatIconButton:
-        text:'Theme settings'
-        on_press: root.manager.current = 'OptionsScreen'; app.color_picker()
-        icon:'application-cog'
-        pos_hint:{'center_x':0.5,'center_y':0.26}
-
+<MainMenuButton@MDCard>:
+    md_bg_color: (159/256,189/256,237/256,1)
+    padding: dp(15)
+    spacing: dp(15)
+    radius: dp(25)
+    ripple_behavior: True
+    image:""
+    text:""
+    subtext:""
+    elevation:30
+    
+    orientation:'vertical'
+    AnchorLayout:
+        anchor_x: 'center'
+        Image:
+            source: root.image
+            size_hint: 1,1
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDLabel:
+            text:root.text
+            font_style:"H6"
+        MDLabel:
+            text:root.subtext
+            font_style:"Caption"
+    
 
 <Capitals>
     name: 'CapitalsScreen'
