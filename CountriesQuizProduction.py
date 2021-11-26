@@ -47,6 +47,8 @@ countries_list = dt.data_from_csv(c_dict, c_number, c_number_counter,countries_l
 
 # This method makes device keyboard appear below main screen
 Window.softinput_mode = 'pan'
+#Resolution which simulates mobile phone
+Window.size = (405,900)
 
 
 # ScreenManager and Screen classes
@@ -210,12 +212,12 @@ class CountriesQuiz(MDApp):
         if mode_number == 1:
             #Calculates score multiplier based on current streak
             points_to_add += (streak_modifier * int(self.root.get_screen(
-                'FlagsScreen').ids.flag_streak.text[15:]))
+                'FlagsScreen').ids.flag_toolbar.streak[15:]))
             self.score = int(self.root.get_screen(
-                'FlagsScreen').ids.flag_score.text[7:]) + points_to_add
+                'FlagsScreen').ids.flag_toolbar.score[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
-                'FlagsScreen').ids.flag_score.text = score_text
+                'FlagsScreen').ids.flag_toolbar.score = score_text
         # Continents
         if mode_number == 2:
             #Calculates score multiplier based on current streak
@@ -272,7 +274,7 @@ class CountriesQuiz(MDApp):
         self.text_to_display = "What is the flag of {}?".format(
             self.flag_name)
         self.root.get_screen(
-            'FlagsScreen').ids.what_country_flag.text = self.text_to_display
+            'FlagsScreen').ids.flag_toolbar.question = self.text_to_display
         # Array holding all items displaying flags in this mode
         self.flag_position = [self.root.get_screen(
             'FlagsScreen').ids.country0, self.root.get_screen(
@@ -357,19 +359,19 @@ class CountriesQuiz(MDApp):
             countries_list.remove(self.flag_chosen)
             self.add_points(1)
             add_ca = int(self.root.get_screen(
-                'FlagsScreen').ids.flag_ca.text[17:]) + 1
-            self.root.get_screen('FlagsScreen').ids.flag_ca.text = self.root.get_screen(
-                'FlagsScreen').ids.flag_ca.text[:17] + str(add_ca)
+                'FlagsScreen').ids.flag_toolbar.correct_answers[17:]) + 1
+            self.root.get_screen('FlagsScreen').ids.flag_toolbar.correct_answers = self.root.get_screen(
+                'FlagsScreen').ids.flag_toolbar.correct_answers[:17] + str(add_ca)
 
             add_streak = int(self.root.get_screen(
-                'FlagsScreen').ids.flag_streak.text[15:]) + 1
-            self.root.get_screen('FlagsScreen').ids.flag_streak.text = self.root.get_screen(
-                'FlagsScreen').ids.flag_streak.text[:15] + str(add_streak)
+                'FlagsScreen').ids.flag_toolbar.streak[15:]) + 1
+            self.root.get_screen('FlagsScreen').ids.flag_toolbar.streak = self.root.get_screen(
+                'FlagsScreen').ids.flag_toolbar.streak[:15] + str(add_streak)
             print(add_ca)
         else:
             print('wrong answer')
-            self.root.get_screen('FlagsScreen').ids.flag_streak.text = self.root.get_screen(
-                'FlagsScreen').ids.flag_streak.text[:15] + '0'
+            self.root.get_screen('FlagsScreen').ids.flag_toolbar.streak = self.root.get_screen(
+                'FlagsScreen').ids.flag_toolbar.streak[:15] + '0'
         self.pick_flag()
 
 

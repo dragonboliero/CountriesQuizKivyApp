@@ -6,7 +6,7 @@
 #Predefined values for back buttons in quiz screens
 <MDIconButton>
     icon: 'backspace-outline'
-    pos_hint:{'center_y':0.95}
+    pos_hint:{'center_y':0.55}
     on_press: app.reload_countries_list()
 
 #Predefined values for lables
@@ -26,6 +26,7 @@
 
 #Screen manager containing all available screens
 SManager:
+    id: 'screenm'
     MainMenu:
     Capitals:
     Flags:
@@ -74,7 +75,7 @@ SManager:
                 text:"Flags"
                 subtext:"Do you know flags of all countries?"
                 image:'data/icons/flags_mode.png'
-                on_release: root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_score.text='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_ca.text='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_streak.text='Current streak: 0' 
+                on_release: root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_toolbar.score='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.streak='Current streak: 0' 
             MainMenuButton:
                 text:"Continents"
                 subtext:"Pick continents for all countries."
@@ -124,6 +125,7 @@ SManager:
 
     MDIconButton:
         on_press: root.manager.current = 'MainScreen'
+        pos_hint:{'center_y':0.95}
     
     MDLabel:
         id:correct_answers
@@ -168,72 +170,103 @@ SManager:
      #   opacity: 0
         
 
+<FlagButton@MDCard>:
+    md_bg_color: (159/256,189/256,237/256,1)
+    padding: dp(15)
+    spacing: dp(15)
+    radius: dp(25)
+    ripple_behavior: False
+    source:""
+    elevation:30
+    
+    orientation:'vertical'
+    AnchorLayout:
+        anchor_x: 'center'
+        Image:
+            source: root.source
+            size_hint: 1,1
+
+<QuizModeToolbar@MDCard>:
+    md_bg_color: (159/256,189/256,237/256,1)
+    radius:[dp(0),dp(0),dp(40),dp(40)]
+    size_hint: 1,0.2
+    elevation: 30
+    score:''
+    correct_answers:''
+    streak:''
+    question:''
+
+    GridLayout:
+        rows: 2
+        BoxLayout:
+            orientation: 'horizontal'
+            MDIconButton:
+                on_release: app.root.current = 'MainScreen'
+            MDCard:
+                score: root.score
+                md_bg_color: (140/256,189/256,237/256,1)
+                elevation: 0
+                radius: dp(40)
+                MDLabel:
+                    text:root.score
+                    font_style:'Button'
+            MDCard:
+                score: root.score
+                md_bg_color: (140/256,189/256,237/256,1)
+                elevation: 0
+                radius: dp(40)
+                MDLabel:
+                    text: root.correct_answers
+                    font_style:'Button'
+            MDCard:
+                score: root.score
+                md_bg_color: (140/256,189/256,237/256,1)
+                elevation: 0
+                radius: dp(40)
+                MDLabel:
+                    text: root.streak
+                    font_style:'Button'
+    
+        MDLabel:
+            text: root.question
+            font_style:"H5"
+    
+
 <Flags>
     name: 'FlagsScreen'
+    MDBoxLayout:
+        orientation: 'vertical'
 
-    MDIconButton:
-        on_press: root.manager.current = 'MainScreen'
-        
+        QuizModeToolbar:
+            size_hint_y: 0.15
+            id: flag_toolbar
+            score: 'Score: 0'
+            correct_answers: 'Correct answers: 0'
+            streak: 'Current streak: 0'
+            question: 'What is the flag of: '
 
-    MDLabel:
-        id: flag_score
-        text: 'Score: 0'
-        size_hint: (0.2,0.15)
-        pos_hint:{'center_x':0.2,'center_y':0.9}
-    
-    MDLabel:
-        id: flag_ca
-        text: 'Correct answers: 0'
-        size_hint: (0.2,0.15)
-        pos_hint:{'center_x':0.45,'center_y':0.9}
-    
-    MDLabel:
-        id: flag_streak
-        text: 'Current streak: 0'
-        size_hint: (0.2,0.15)
-        pos_hint:{'center_x':0.70,'center_y':0.9}
+        GridLayout:
+            rows: 4
+            size_hint_y: 0.8
+            padding: [dp(20),dp(20),dp(20),dp(20)]
+            spacing: dp(20)
+            FlagButton:
+                id:country0
+                source:"data/flags/nepal_flag-jpg-xs.jpg"
+                on_press: app.check_flag(0)
+            FlagButton:
+                id:country1
+                source:"data/flags/poland_flag-jpg-xs.jpg"
+                on_press: app.check_flag(1)
+            FlagButton:
+                id:country2
+                source:"data/flags/belarus_flag-jpg-xs.jpg"
+                on_press: app.check_flag(2)
+            FlagButton:
+                id:country3
+                source:"data/flags/russia_flag-jpg-xs.jpg"
+                on_press: app.check_flag(3)
 
-    MDLabel:
-        id: what_country_flag
-        text: 'What is the flag of: '
-        size_hint: (1,0.15)
-        pos_hint:{'center_x':0.5,'center_y':0.5}
-
-    #Top left flag
-    Image: 
-        id:country0
-        pos_hint:{'center_x':0.25, 'center_y':0.7}
-        source: 'flags/finland_flag-jpg-xs.jpg'
-    Button: 
-        pos_hint:{'center_x':0.25, 'center_y':0.7}
-        on_press: app.check_flag(0)
-
-    #Top right flag
-    Image:  
-        id:country1
-        pos_hint:{'center_x':0.75, 'center_y':0.7}
-        source: 'flags/finland_flag-jpg-xs.jpg'
-    Button: 
-        pos_hint:{'center_x':0.75, 'center_y':0.7}
-        on_press: app.check_flag(1)
-
-    #Bottom left flag
-    Image:  
-        id:country2
-        pos_hint:{'center_x':0.25, 'center_y':0.25}
-        source: 'flags/finland_flag-jpg-xs.jpg'
-    Button: 
-        pos_hint:{'center_x':0.25, 'center_y':0.25}
-        on_press: app.check_flag(2)
-
-    #Bottom right flag
-    Image:  
-        id:country3
-        pos_hint:{'center_x':0.75, 'center_y':0.25}
-        source: 'flags/finland_flag-jpg-xs.jpg'
-    Button: 
-        pos_hint:{'center_x':0.75, 'center_y':0.25}
-        on_press: app.check_flag(3)
 
 #Definition of tile, later used in continents quiz mode grid layout.
 <ContinentTile@SmartTileWithStar>
