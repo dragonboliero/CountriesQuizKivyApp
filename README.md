@@ -13,7 +13,7 @@
 - [Kivy](https://kivy.org/#home)    
 - [KivyMD](https://kivymd.readthedocs.io/en/latest/)
 <br/><br/>
-## Screenshoots
+## Screenshoots (as of 27.11.2021)
 ![Main menu](https://i.imgur.com/yNLpX7t.png?1)
 ![Capitals quiz](https://i.imgur.com/CSRspZL.png?1)
 <br/>
