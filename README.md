@@ -7,7 +7,7 @@
 #### The app targets mobile phones, but as it's a Python and Kivy/KivyMD project, it can be run on other platforms, i.e. Windows, Linux, iOS etc. 
 <br/><br/>
 ## Project dependencies
-#### Dependencies (as of 27.11.2021)
+#### Dependencies (as of 27.11.2021):
 - csv (Python build in module)<br/>
 - random (Python build in module)<br/>
 - [Kivy](https://kivy.org/#home)    
