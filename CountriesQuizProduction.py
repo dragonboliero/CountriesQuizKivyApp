@@ -124,13 +124,13 @@ class CountriesQuiz(MDApp):
             self.text_to_display = "What is the capital of {}?".format(
                 self.country_name)
             self.root.get_screen(
-                'CapitalsScreen').ids.question.text = self.text_to_display
+                'CapitalsScreen').ids.capitals_toolbar.question = self.text_to_display
 
         if mode_number == 2:
             self.text_to_display = "On which continent lies {}?".format(
                 self.country_name)
             self.root.get_screen(
-                'ContinentsScreen').ids.continent_question.text = self.text_to_display
+                'ContinentsScreen').ids.continents_toolbar.question = self.text_to_display
 
         return self.country_name
 
@@ -166,7 +166,7 @@ class CountriesQuiz(MDApp):
             user_answer = Snackbar(
                 text="Congratulations, correct answer.",
                 snackbar_x="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.4},
+                pos_hint={'center_x': 0.5, 'center_y': 0.6},
                 bg_color=(0.2, 1, 0.3, 0.2),
                 font_size="15sp").open()
 
@@ -184,7 +184,7 @@ class CountriesQuiz(MDApp):
                 text=f"Wrong answer. It's {c_dict[self.country_name]['capital']}.",
                 snackbar_x="40dp",
                 snackbar_y="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.4},
+                pos_hint={'center_x': 0.5, 'center_y': 0.6},
                 bg_color=(1, 0, 0, 0.2),
                 font_size=snack_font_size).open()
 
@@ -202,12 +202,12 @@ class CountriesQuiz(MDApp):
         if mode_number == 0:
             #Calculates score multiplier based on current streak
             points_to_add += (streak_modifier * int(self.root.get_screen
-                ('CapitalsScreen').ids.ca_streak.text[15:]))
+                ('CapitalsScreen').ids.capitals_toolbar.streak[15:]))
             self.score = int(self.root.get_screen(
-                'CapitalsScreen').ids.bot_bar.title[7:]) + points_to_add
+                'CapitalsScreen').ids.capitals_toolbar.score[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
-                'CapitalsScreen').ids.bot_bar.title = score_text
+                'CapitalsScreen').ids.capitals_toolbar.score = score_text
         # Flags
         if mode_number == 1:
             #Calculates score multiplier based on current streak
@@ -222,12 +222,12 @@ class CountriesQuiz(MDApp):
         if mode_number == 2:
             #Calculates score multiplier based on current streak
             points_to_add += (streak_modifier * int(self.root.get_screen(
-                'ContinentsScreen').ids.conti_streak.text[16:]))
+                'ContinentsScreen').ids.continents_toolbar.streak[16:]))
             self.score = int(self.root.get_screen(
-                'ContinentsScreen').ids.conti_score.text[7:]) + points_to_add
+                'ContinentsScreen').ids.continents_toolbar.score[7:]) + points_to_add
             score_text = 'Score: {}'.format(self.score)
             self.root.get_screen(
-                'ContinentsScreen').ids.conti_score.text = score_text
+                'ContinentsScreen').ids.continents_toolbar.score = score_text
 
 
     # Used only in capiatals quiz mode
@@ -242,11 +242,11 @@ class CountriesQuiz(MDApp):
     '''
     def add_canswer(self):
         self.correct_answers = int(self.root.get_screen(
-            'CapitalsScreen').ids.correct_answers.text[17:]) + 1
+            'CapitalsScreen').ids.capitals_toolbar.correct_answers[17:]) + 1
         current_canswers = self.root.get_screen(
-            'CapitalsScreen').ids.correct_answers.text[:17] + str(self.correct_answers)
+            'CapitalsScreen').ids.capitals_toolbar.correct_answers[:17] + str(self.correct_answers)
         self.root.get_screen(
-            'CapitalsScreen').ids.correct_answers.text = current_canswers
+            'CapitalsScreen').ids.capitals_toolbar.correct_answers = current_canswers
 
 
     '''Used only in capitals quiz mode. Increases correct answers streak or
@@ -257,14 +257,14 @@ class CountriesQuiz(MDApp):
     def add_streak(self, correct_or_wrong):
         if (correct_or_wrong):
             self.answer_streak = int(self.root.get_screen(
-                'CapitalsScreen').ids.ca_streak.text[15:]) + 1
+                'CapitalsScreen').ids.capitals_toolbar.streak[15:]) + 1
             current_answer_streak = self.root.get_screen(
-                'CapitalsScreen').ids.ca_streak.text[:16] + str(self.answer_streak)
+                'CapitalsScreen').ids.capitals_toolbar.streak[:16] + str(self.answer_streak)
             self.root.get_screen(
-                'CapitalsScreen').ids.ca_streak.text = current_answer_streak
+                'CapitalsScreen').ids.capitals_toolbar.streak = current_answer_streak
         else:
             self.root.get_screen(
-                'CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'
+                'CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'
 
 
     # Used only in flags quiz mode.
@@ -407,7 +407,7 @@ class CountriesQuiz(MDApp):
     '''
     def check_continent(self, image_number):
         current_country = self.root.get_screen(
-            'ContinentsScreen').ids.continent_question.text
+            'ContinentsScreen').ids.continents_toolbar.question
         current_country = current_country[24:-1]
 
         if image_number == 0:
@@ -443,9 +443,9 @@ class CountriesQuiz(MDApp):
             the rest is current score number.
             '''
             correct_answers = int(self.root.get_screen(
-                'ContinentsScreen').ids.conti_correct.text[17:]) + 1
-            self.root.get_screen('ContinentsScreen').ids.conti_correct.text = self.root.get_screen(
-                'ContinentsScreen').ids.conti_correct.text[:17] + str(correct_answers)
+                'ContinentsScreen').ids.continents_toolbar.correct_answers[17:]) + 1
+            self.root.get_screen('ContinentsScreen').ids.continents_toolbar.correct_answers = self.root.get_screen(
+                'ContinentsScreen').ids.continents_toolbar.correct_answers[:17] + str(correct_answers)
             #Remove country from current list of countries
             countries_list.remove(self.country_name)
             '''
@@ -453,13 +453,13 @@ class CountriesQuiz(MDApp):
             the rest is current score number
             '''
             current_streak = int(self.root.get_screen(
-                'ContinentsScreen').ids.conti_streak.text[16:]) + 1
-            self.root.get_screen('ContinentsScreen').ids.conti_streak.text = self.root.get_screen(
-                'ContinentsScreen').ids.conti_streak.text[:16] + str(current_streak)
+                'ContinentsScreen').ids.continents_toolbar.streak[16:]) + 1
+            self.root.get_screen('ContinentsScreen').ids.continents_toolbar.streak = self.root.get_screen(
+                'ContinentsScreen').ids.continents_toolbar.streak[:16] + str(current_streak)
             print('correct')
         else:
             self.root.get_screen(
-                'ContinentsScreen').ids.conti_streak.text = 'Current streak: 0'
+                'ContinentsScreen').ids.continents_toolbar.streak = 'Current streak: 0'
             print('false')
 
 

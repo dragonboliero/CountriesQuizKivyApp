@@ -70,7 +70,7 @@ SManager:
                 text:"Capitals"
                 subtext:"Guess all capitals of the world."
                 image:'data/icons/capitals_mode.png'
-                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.correct_answers.text = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.ca_streak.text = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.bot_bar.title = 'Score: 0'
+                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answer = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'
             MainMenuButton:
                 text:"Flags"
                 subtext:"Do you know flags of all countries?"
@@ -80,7 +80,7 @@ SManager:
                 text:"Continents"
                 subtext:"Pick continents for all countries."
                 image:'data/icons/continents_mode.png'
-                on_release: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.conti_score.text='Score: 0';root.manager.get_screen('ContinentsScreen').ids.conti_correct.text='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.conti_streak.text='Current streak: 0';
+                on_release: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.score='Score: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.streak='Current streak: 0';
             MainMenuButton:
                 text:"Settings"
                 subtext:"Adjust application settings"
@@ -97,7 +97,7 @@ SManager:
     md_bg_color: (159/256,189/256,237/256,1)
     padding: dp(15)
     spacing: dp(15)
-    radius: dp(25)
+    radius: [dp(25),dp(25),dp(25),dp(25)]
     ripple_behavior: True
     image:""
     text:""
@@ -122,40 +122,37 @@ SManager:
 
 <Capitals>
     name: 'CapitalsScreen'
-
-    MDIconButton:
-        on_press: root.manager.current = 'MainScreen'
-        pos_hint:{'center_y':0.95}
-    
-    MDLabel:
-        id:correct_answers
-        text:'Correct answers: 0'
-        pos_hint:{'center_x':0.5,'center_y':0.6}
-
-    MDLabel:
-        id:ca_streak
-        text:'Current streak: 0'  
-        pos_hint:{'center_x':0.5,'center_y':0.5}
-
-    MDLabel:
-        id: question
-        text: 'What is the capital of: '
-        pos_hint:{'center_x':0.5,'center_y':0.29}
-
-    MDTextFieldRound:
-        id: answer
-        pos_hint:{'center_x':0.5,'center_y':0.21}
-        size_hint:(0.4,0.1)
-
     MDBoxLayout:
-        orientation:'vertical'
-        MDBottomAppBar:
-            MDToolbar:
-                id: bot_bar
-                icon: 'forward'
-                type: 'bottom'
-                title: 'Score: 0'
-                on_action_button: app.check_answer(); app.assign_country_to_label(0);
+        orientation: 'vertical'
+
+        QuizModeToolbar:
+            size_hint_y: 0.15
+            id: capitals_toolbar
+            score: 'Score: 0'
+            correct_answers: 'Correct answers: 0'
+            streak: 'Current streak: 0'
+            question: 'What is the capital of: ' 
+        GridLayout:
+            rows:2
+            size_hint_y:0.8
+            FloatLayout:
+                MDTextFieldRound:
+                    id: answer
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(0.65,0.17)
+                    font_size:"32dp"
+                    halign:'center'
+                    on_text_validate: app.check_answer(); app.assign_country_to_label(0);
+                    
+
+            MDBoxLayout:
+                orientation:'vertical'
+                size_hint_y: 0.1
+                MDBottomAppBar:
+                    MDToolbar:
+                        icon: 'forward'
+                        type: 'bottom'
+                        on_action_button: app.check_answer(); app.assign_country_to_label(0);
 
     #Animation image displayed after correct answer
     #Image:
@@ -170,21 +167,19 @@ SManager:
      #   opacity: 0
         
 
-<FlagButton@MDCard>:
+<ImageButton@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
     padding: dp(15)
     spacing: dp(15)
-    radius: dp(25)
+    radius: [dp(25),dp(25),dp(25),dp(25)]
     ripple_behavior: False
     source:""
     elevation:30
-    
-    orientation:'vertical'
-    AnchorLayout:
-        anchor_x: 'center'
-        Image:
-            source: root.source
-            size_hint: 1,1
+    orientation:'horizontal'
+    Image:
+        source: root.source
+        allow_stretch: True
+        size_hint_y: 1
 
 <QuizModeToolbar@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
@@ -206,7 +201,7 @@ SManager:
                 score: root.score
                 md_bg_color: (140/256,189/256,237/256,1)
                 elevation: 0
-                radius: dp(40)
+                radius: [dp(40),dp(0),dp(0),dp(40)]
                 MDLabel:
                     text:root.score
                     font_style:'Button'
@@ -214,7 +209,6 @@ SManager:
                 score: root.score
                 md_bg_color: (140/256,189/256,237/256,1)
                 elevation: 0
-                radius: dp(40)
                 MDLabel:
                     text: root.correct_answers
                     font_style:'Button'
@@ -222,7 +216,7 @@ SManager:
                 score: root.score
                 md_bg_color: (140/256,189/256,237/256,1)
                 elevation: 0
-                radius: dp(40)
+                radius: [dp(0),dp(40),dp(40),dp(0)]
                 MDLabel:
                     text: root.streak
                     font_style:'Button'
@@ -250,19 +244,19 @@ SManager:
             size_hint_y: 0.8
             padding: [dp(20),dp(20),dp(20),dp(20)]
             spacing: dp(20)
-            FlagButton:
+            ImageButton:
                 id:country0
                 source:"data/flags/nepal_flag-jpg-xs.jpg"
                 on_press: app.check_flag(0)
-            FlagButton:
+            ImageButton:
                 id:country1
                 source:"data/flags/poland_flag-jpg-xs.jpg"
                 on_press: app.check_flag(1)
-            FlagButton:
+            ImageButton:
                 id:country2
                 source:"data/flags/belarus_flag-jpg-xs.jpg"
                 on_press: app.check_flag(2)
-            FlagButton:
+            ImageButton:
                 id:country3
                 source:"data/flags/russia_flag-jpg-xs.jpg"
                 on_press: app.check_flag(3)
@@ -274,68 +268,51 @@ SManager:
     height: "240dp"
 <Continents>
     name: 'ContinentsScreen'
+    MDBoxLayout:
+        orientation:'vertical'
 
-    MDIconButton:
-        on_press: root.manager.current = 'MainScreen'
-    
-    MDLabel:
-        id: continent_question
-        text:'On which continent lies '
-        pos_hint:{'center_x':0.5,'center_y':0.9}
-    
-    MDLabel:
-        id: conti_score
-        text:'Score: 0'
-        pos_hint:{'center_x':0.2,'center_y':0.85}
-    
-    MDLabel:
-        id: conti_correct
-        text:'Correct answers: 0'
-        pos_hint:{'center_x':0.5,'center_y':0.85}
-    
-    MDLabel:
-        id: conti_streak
-        text:'Current streak: 0'
-        pos_hint:{'center_x':0.8,'center_y':0.85}
-    
-    MDGridLayout:
-        cols:3
-        rows:2
-        adaptive_height: True
-        #padding: dp(4), dp(4)
-        spacing: dp(4) 
+        QuizModeToolbar:
+            size_hint_y: 0.15
+            id: continents_toolbar
+            score: 'Score: 0'
+            correct_answers: 'Correct answers: 0'
+            streak: 'Current streak: 0'
+            question: 'On which continent lies: '
 
-        ContinentTile:
-            id: africa
-            source:'data/continents/Africa.jpg' 
-            on_release: app.check_continent(0);app.assign_country_to_label(2)
-            
-            text:"Africa"
-        ContinentTile:
-            id: asia
-            source:'data/continents/Asia.jpg'
-            on_release: app.check_continent(1);app.assign_country_to_label(2)
-            text:"Asia"
-        ContinentTile:
-            id: europe
-            source:'data/continents/Europe.jpg' 
-            on_release: app.check_continent(2);app.assign_country_to_label(2)
-            text:"Europe"
-        ContinentTile:
-            id: na
-            source:'data/continents/North America.gif' 
-            on_release: app.check_continent(3);app.assign_country_to_label(2)
-            text:"North America"
-        ContinentTile:
-            id: oceania
-            source:'data/continents/Oceania.jpg' 
-            on_release: app.check_continent(4);app.assign_country_to_label(2)
-            text:"Oceania"
-        ContinentTile:
-            id: sa
-            source:'data/continents/South America.jpg' 
-            on_release: app.check_continent(5);app.assign_country_to_label(2)
-            text:"South America"
+
+
+        GridLayout:
+            rows: 3
+            columns: 2
+            size_hint_y: 0.8
+            padding: [dp(20),dp(20),dp(20),dp(20)]
+            spacing: dp(20)
+
+
+            ImageButton:
+                id: africa
+                source:'data/continents/Africa.png' 
+                on_press: app.check_continent(0);app.assign_country_to_label(2)
+            ImageButton:
+                id: asia
+                source:'data/continents/Asia.png'
+                on_press: app.check_continent(1);app.assign_country_to_label(2)
+            ImageButton:
+                id: europe
+                source:'data/continents/Europe.png' 
+                on_press: app.check_continent(2);app.assign_country_to_label(2)
+            ImageButton:
+                id: na
+                source:'data/continents/North America.png' 
+                on_press: app.check_continent(3);app.assign_country_to_label(2)
+            ImageButton:
+                id: oceania
+                source:'data/continents/Oceania.png' 
+                on_press: app.check_continent(4);app.assign_country_to_label(2)
+            ImageButton:
+                id: sa
+                source:'data/continents/South America.png' 
+                on_press: app.check_continent(5);app.assign_country_to_label(2)
 
 <Options>
     name: 'OptionsScreen'
