@@ -15,7 +15,7 @@
 <br/><br/>
 ## Screenshoots
 ![Main menu](https://i.imgur.com/yNLpX7t.png?1)
-![Capitals quiz](https://i.imgur.com/H5G9Jpq.png?1)
+![Capitals quiz](https://i.imgur.com/r7friNS.png?1)
 <br/>
-![Flags quiz](https://i.imgur.com/DqIf3N3.png?1)
-![Continents quiz](https://i.imgur.com/kRsVemY.png?1)
+![Flags quiz](https://i.imgur.com/iaXvFpI.png?1)
+![Continents quiz](https://i.imgur.com/UqQmm0e.png?1)
