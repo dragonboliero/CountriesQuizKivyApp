@@ -1,16 +1,10 @@
 '''
 To do list:
-    *Adjust buttons size in main menu, so that all have the same width.
-    *Find icons for categories.
-    *Redesign screens. Create a screen template class for quizes screens 
-    which will inherit from it.
-    *Investigate why images in flags quiz mode don't scale properly on 
-     Android.
-    *Currently data picker doesn't work in Android build. There's an error
-     stating that there is no such module (Need a solutoon).
+    *Change settings screen to high scores screen based on BottomNavigation 
+    and DataTables.
+    *Change direction of animations when switching between quiz modes and
+    main menu.
     *Make the app working in the background.
-    *Find images of continents outlines for continents quiz mode and adjust
-    them to fit them properly in grid tiles.
     *Add animaiton + sound appearing after an answer. (To be considered)
 
 '''
@@ -76,7 +70,7 @@ class Continents(TemplateScreen):
     pass
 
 
-class Options(TemplateScreen):
+class HiScores(TemplateScreen):
     pass
 
 
@@ -127,7 +121,7 @@ class CountriesQuiz(MDApp):
                 'CapitalsScreen').ids.capitals_toolbar.question = self.text_to_display
 
         if mode_number == 2:
-            self.text_to_display = "On which continent lies {}?".format(
+            self.text_to_display = "In which continent lies {}?".format(
                 self.country_name)
             self.root.get_screen(
                 'ContinentsScreen').ids.continents_toolbar.question = self.text_to_display
@@ -265,6 +259,16 @@ class CountriesQuiz(MDApp):
         else:
             self.root.get_screen(
                 'CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'
+
+
+    '''Used only in capitals quiz mode. Creates file name base on question text.
+       Then the file name is used to display a flag of an asked country.
+    '''
+    def assign_flag(self):
+        compatible_name = self.country_name.lower().replace(' ','-')
+        flag_file_name = 'data/flags/' + compatible_name + '_flag-jpg-xs.jpg'
+        print(flag_file_name)
+        self.root.get_screen('CapitalsScreen').ids.question_flag.source = flag_file_name
 
 
     # Used only in flags quiz mode.

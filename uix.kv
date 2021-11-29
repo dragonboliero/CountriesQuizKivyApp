@@ -31,7 +31,7 @@ SManager:
     Capitals:
     Flags:
     Continents:
-    Options:
+    HiScores:
     TemplateScreen:
 
 
@@ -70,7 +70,7 @@ SManager:
                 text:"Capitals"
                 subtext:"Guess all capitals of the world."
                 image:'data/icons/capitals_mode.png'
-                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answer = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'
+                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answer = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'; app.assign_flag()
             MainMenuButton:
                 text:"Flags"
                 subtext:"Do you know flags of all countries?"
@@ -82,10 +82,10 @@ SManager:
                 image:'data/icons/continents_mode.png'
                 on_release: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.score='Score: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.streak='Current streak: 0';
             MainMenuButton:
-                text:"Settings"
-                subtext:"Adjust application settings"
+                text:"High scores"
+                subtext:"Check your best scores in different modes."
                 image:'data/icons/settings.png'
-                on_release: root.manager.current = 'OptionsScreen'; app.color_picker()
+                on_release: root.manager.current = 'HSScreen'; app.color_picker()
         MDBoxLayout:
             orientation:'vertical'
             size_hint_y:0.10
@@ -132,17 +132,23 @@ SManager:
             correct_answers: 'Correct answers: 0'
             streak: 'Current streak: 0'
             question: 'What is the capital of: ' 
+
         GridLayout:
-            rows:2
+            rows:3
             size_hint_y:0.8
             FloatLayout:
+                ImageButton:
+                    id: question_flag
+                    source:"data/flags/poland_flag-jpg-xs.jpg"
+                    size_hint: (0.4,0.2)
+                    pos_hint:{'center_x':0.5,'center_y':0.85}
                 MDTextFieldRound:
                     id: answer
                     pos_hint:{'center_x':0.5,'center_y':0.5}
                     size_hint:(0.65,0.17)
                     font_size:"32dp"
                     halign:'center'
-                    on_text_validate: app.check_answer(); app.assign_country_to_label(0);
+                    on_text_validate: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
                     
 
             MDBoxLayout:
@@ -152,7 +158,7 @@ SManager:
                     MDToolbar:
                         icon: 'forward'
                         type: 'bottom'
-                        on_action_button: app.check_answer(); app.assign_country_to_label(0);
+                        on_action_button: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
 
     #Animation image displayed after correct answer
     #Image:
@@ -259,7 +265,7 @@ SManager:
             ImageButton:
                 id:country3
                 source:"data/flags/russia_flag-jpg-xs.jpg"
-                on_press: app.check_flag(3)
+                on_press: app.check_flag(3);
 
 
 #Definition of tile, later used in continents quiz mode grid layout.
@@ -277,7 +283,7 @@ SManager:
             score: 'Score: 0'
             correct_answers: 'Correct answers: 0'
             streak: 'Current streak: 0'
-            question: 'On which continent lies: '
+            question: 'In which continent lies: '
 
 
 
@@ -314,8 +320,9 @@ SManager:
                 source:'data/continents/South America.png' 
                 on_press: app.check_continent(5);app.assign_country_to_label(2)
 
-<Options>
-    name: 'OptionsScreen'
+<HiScores>
+    name: 'HSScreen'
     
     MDIconButton:
         on_press: root.manager.current = 'MainScreen'
+    
