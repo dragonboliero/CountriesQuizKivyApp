@@ -22,8 +22,6 @@
     size_hint: (0.4,0.3)
     opacity:0
 
-
-
 #Screen manager containing all available screens
 SManager:
     id: 'screenm'
@@ -32,7 +30,9 @@ SManager:
     Flags:
     Continents:
     HiScores:
+    CapitalsScore:
     TemplateScreen:
+
 
 
 #Screen used as a template for other screens
@@ -42,6 +42,7 @@ SManager:
         size_hint: (1,1)
         pos_hint: {"center_x":0.5,"center_y":0.5}
         md_bg_color: app.bg_color
+
 
 
 <MainMenu>
@@ -85,13 +86,16 @@ SManager:
                 text:"High scores"
                 subtext:"Check your best scores in different modes."
                 image:'data/icons/settings.png'
-                on_release: root.manager.current = 'HSScreen'; app.color_picker()
+                on_release: root.manager.current = 'HSScreen'; app.get_scores()
+
         MDBoxLayout:
             orientation:'vertical'
             size_hint_y:0.10
             MDLabel:
                 text:"Copyright© Wojciech Milczarek 2021"
                 font_style:'Overline'
+
+
 
 <MainMenuButton@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
@@ -103,13 +107,14 @@ SManager:
     text:""
     subtext:""
     elevation:30
-    
     orientation:'vertical'
+
     AnchorLayout:
         anchor_x: 'center'
         Image:
             source: root.image
             size_hint: 1,1
+
     MDBoxLayout:
         orientation: 'vertical'
         MDLabel:
@@ -118,7 +123,8 @@ SManager:
         MDLabel:
             text:root.subtext
             font_style:"Caption"
-    
+
+
 
 <Capitals>
     name: 'CapitalsScreen'
@@ -150,7 +156,6 @@ SManager:
                     halign:'center'
                     on_text_validate: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
                     
-
             MDBoxLayout:
                 orientation:'vertical'
                 size_hint_y: 0.1
@@ -160,18 +165,7 @@ SManager:
                         type: 'bottom'
                         on_action_button: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
 
-    #Animation image displayed after correct answer
-    #Image:
-     #   id: gif
-     #   source: ''
-     #   center: self.parent.center
-     #   size: 50, 50
-     #   size_hint: (0.2,0.2)
-     #   allow_stretch: True
-     #   anim_delay: -1
-     #   anim_loop: 1
-     #   opacity: 0
-        
+
 
 <ImageButton@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
@@ -186,6 +180,8 @@ SManager:
         source: root.source
         allow_stretch: True
         size_hint_y: 1
+
+
 
 <QuizModeToolbar@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
@@ -230,7 +226,8 @@ SManager:
         MDLabel:
             text: root.question
             font_style:"H5"
-    
+
+
 
 <Flags>
     name: 'FlagsScreen'
@@ -268,10 +265,7 @@ SManager:
                 on_press: app.check_flag(3);
 
 
-#Definition of tile, later used in continents quiz mode grid layout.
-<ContinentTile@SmartTileWithStar>
-    size_hint_y: None
-    height: "240dp"
+
 <Continents>
     name: 'ContinentsScreen'
     MDBoxLayout:
@@ -285,15 +279,12 @@ SManager:
             streak: 'Current streak: 0'
             question: 'In which continent lies: '
 
-
-
         GridLayout:
             rows: 3
             columns: 2
             size_hint_y: 0.8
             padding: [dp(20),dp(20),dp(20),dp(20)]
             spacing: dp(20)
-
 
             ImageButton:
                 id: africa
@@ -320,9 +311,148 @@ SManager:
                 source:'data/continents/South America.png' 
                 on_press: app.check_continent(5);app.assign_country_to_label(2)
 
+
+
+<HiscoreTable@MDCard>:
+    size_hint:(0.7,0.95)
+    pos_hint:{'center_x':0.5,'center_y':0.5}
+    md_bg_color: (159/256,189/256,237/256,1)
+    radius: [dp(25),dp(25),dp(25),dp(25)]
+    orientation: 'vertical'
+    GridLayout:
+        cols:2
+        rows:11
+        MDLabel:
+            text:'Position'
+        MDLabel:
+            text:'Score'
+        MDLabel:
+            text:'1'
+        MDLabel:
+            id: pos1
+            text:'0'
+        MDLabel:
+            text:'2'
+        MDLabel:
+            id: pos2
+            text:'0'
+        MDLabel:
+            text:'3'
+        MDLabel:
+            id: pos3
+            text:'0'
+        MDLabel:
+            text:'4'
+        MDLabel:
+            id: pos4
+            text:'0'
+        MDLabel:
+            text:'5'
+        MDLabel:
+            id: pos5
+            text:'0'
+        MDLabel:
+            text:'6'
+        MDLabel:
+            id: pos6
+            text:'0'
+        MDLabel:
+            text:'7'
+        MDLabel:
+            id: pos7
+            text:'0'
+        MDLabel:
+            text:'8'
+        MDLabel:
+            id: pos8
+            text:'0'
+        MDLabel:
+            text:'9'
+        MDLabel:
+            id: pos9
+            text:'0'
+        MDLabel:
+            text:'10'
+        MDLabel:
+            id: pos10
+            text:'0'
+
+
+
 <HiScores>
     name: 'HSScreen'
-    
-    MDIconButton:
-        on_press: root.manager.current = 'MainScreen'
-    
+    MDBottomNavigation:
+        
+        panel_color: get_color_from_hex("#9fbded")
+        selected_color_background: get_color_from_hex("#4e63c2")
+        text_color_active: 0, 0, 0, 1
+        MDBottomNavigationItem:
+            name: "CapitalsScore"
+            text: 'Capitals'
+            icon: 'android'
+            MDCard:
+                size_hint: (1,1)
+                pos_hint: {"center_x":0.5,"center_y":0.5}
+                md_bg_color: app.bg_color
+            MDBoxLayout:
+                orientation: 'vertical'
+
+                QuizModeToolbar:
+                    size_hint_y: 0.15
+                    id: capScoreToolbar
+                    score: ''
+                    correct_answers: ''
+                    streak: ''
+                    question: 'Top 10 scores in capitals quiz mode'   
+                MDBoxLayout:
+                    size_hint: (0.9,0.8)
+                    pos_hint:{'center_x':0.5,'center_y':0.55}
+                    HiscoreTable:
+
+
+        MDBottomNavigationItem:
+            name: "flags_score"
+            text: 'Flags'
+            icon: 'android'
+            MDCard:
+                size_hint: (1,1)
+                pos_hint: {"center_x":0.5,"center_y":0.5}
+                md_bg_color: app.bg_color
+            MDBoxLayout:
+                orientation: 'vertical'
+
+                QuizModeToolbar:
+                    size_hint_y: 0.15
+                    id: flaScoreToolbar
+                    score: ''
+                    correct_answers: ''
+                    streak: ''
+                    question: 'Top 10 scores in flags quiz mode'   
+                MDBoxLayout:
+                    size_hint: (0.9,0.8)
+                    pos_hint:{'center_x':0.5,'center_y':0.55}
+                    HiscoreTable:
+
+
+        MDBottomNavigationItem:
+            name: "continents_score"
+            text: 'Continents'
+            icon: 'android'
+            MDCard:
+                size_hint: (1,1)
+                pos_hint: {"center_x":0.5,"center_y":0.5}
+                md_bg_color: app.bg_color
+            MDBoxLayout:
+                orientation: 'vertical'
+
+                QuizModeToolbar:
+                    size_hint_y: 0.15
+                    id: conScoreToolbar
+                    score: ''
+                    correct_answers: ''
+                    streak: ''
+                    question: 'Top 10 scores in continents quiz mode'   
+                MDBoxLayout:
+                    size_hint: (0.9,0.8)
+                    pos_hint:{'center_x':0.5,'center_y':0.55}
+                    HiscoreTable:

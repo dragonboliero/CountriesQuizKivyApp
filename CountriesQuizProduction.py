@@ -1,11 +1,11 @@
 '''
 To do list:
-    *Change settings screen to high scores screen based on BottomNavigation 
-    and DataTables.
+    *Change settings screen to high scores screen based on BottomNavigation.
+    *Save player score (if hiscore) after leaving each mode.
+    *Load hiscores when entering HiScores menu.
     *Change direction of animations when switching between quiz modes and
     main menu.
     *Make the app working in the background.
-    *Add animaiton + sound appearing after an answer. (To be considered)
 
 '''
 
@@ -20,10 +20,9 @@ import dataloader as dt
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivymd.uix.dialog import MDDialog
-#from kivymd.uix.picker import MDThemePicker
 from kivy.core.window import Window
 from kivymd.uix.snackbar import Snackbar
+
 
 
 # Dictionary with master data about countries
@@ -73,6 +72,9 @@ class Continents(TemplateScreen):
 class HiScores(TemplateScreen):
     pass
 
+class CapitalsScore(Screen):
+    pass
+
 
 # Main application class
 class CountriesQuiz(MDApp):
@@ -85,6 +87,10 @@ class CountriesQuiz(MDApp):
         self.answer_streak = 0
         # Default backgrund RGBA value
         self.bg_color = (78/255, 99/255, 194/255, 1)
+        #Arrays for storing hiscores
+        self.capitals_hiscores = []
+        self.flags_hiscores = []
+        self.continents_hiscores = []
         # Loading .kv file
         self.uix = Builder.load_file('uix.kv')
         return self.uix
@@ -467,16 +473,25 @@ class CountriesQuiz(MDApp):
             print('false')
 
 
-    # Widget created when entering theme settings screen
-    def color_picker(self):
-        #c_picker = MDThemePicker(size_hint=(1,1), on_dismiss = self.go_to_main)
-        # c_picker.open()
-        print("Picker isn't working at the moment")
-
-
-    # Method which allows to go back to main menu screen from theme settings
+    # Method which allows to go back to main menu screen from hiscores screen
     def go_to_main(self, picker_object):
         self.root.current = 'MainScreen'
+
+    def get_scores(self):
+        self.capitals_hiscores.clear()
+        self.flags_hiscores.clear()
+        self.continents_hiscores.clear()
+        with open('data/hiscores.csv','r') as data:
+            counter = 0
+            for row in data:
+                if counter == 0:
+                    self.capitals_hiscores.append(row.strip())
+                elif counter == 1:
+                    self.flags_hiscores.append(row.strip())
+                elif counter == 2:
+                    self.continents_hiscores.append(row.strip())
+                counter +=1
+            print(self.capitals_hiscores,self.flags_hiscores,self.continents_hiscores)
 
 
     def testing(self):
