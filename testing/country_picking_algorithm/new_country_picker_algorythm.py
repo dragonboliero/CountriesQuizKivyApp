@@ -1,5 +1,5 @@
 '''
-New algorythm for choosing countries in different modes.
+New algorithm for choosing countries in different modes.
 In capitals mode 
 '''
 
@@ -45,7 +45,7 @@ c_dict = data_from_csv(c_dict)
 current_dict = list(c_dict.keys())
 print(f"List of countries before removing anything {current_dict}")
 
-#This algorythm will be used in capitals quiz and continents quiz modes 
+#This algorithm will be used in capitals quiz and continents quiz modes 
 #because they require only one country to be chosen from the dictionary
 '''
 while True:
@@ -71,7 +71,7 @@ while True:
         current_dict = list(c_dict.keys())
 '''
 
-#This algorythm will be used in flags quiz which requires four random countries
+#This algorithm will be used in flags quiz which requires four random countries
 #at once
 while True:
 

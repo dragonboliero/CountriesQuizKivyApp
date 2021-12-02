@@ -30,7 +30,6 @@ SManager:
     Flags:
     Continents:
     HiScores:
-    CapitalsScore:
     TemplateScreen:
 
 
@@ -86,7 +85,7 @@ SManager:
                 text:"High scores"
                 subtext:"Check your best scores in different modes."
                 image:'data/icons/settings.png'
-                on_release: root.manager.current = 'HSScreen'; app.get_scores()
+                on_release: root.manager.current = 'HSScreen';app.fill_hiscores()
 
         MDBoxLayout:
             orientation:'vertical'
@@ -382,7 +381,6 @@ SManager:
 <HiScores>
     name: 'HSScreen'
     MDBottomNavigation:
-        
         panel_color: get_color_from_hex("#9fbded")
         selected_color_background: get_color_from_hex("#4e63c2")
         text_color_active: 0, 0, 0, 1
@@ -407,7 +405,69 @@ SManager:
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
-                    HiscoreTable:
+                    MDCard:
+                        size_hint:(0.7,0.95)
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        md_bg_color: (159/256,189/256,237/256,1)
+                        radius: [dp(25),dp(25),dp(25),dp(25)]
+                        orientation: 'vertical'
+                        GridLayout:
+                            cols:2
+                            rows:11
+                            MDLabel:
+                                text:'Position'
+                            MDLabel:
+                                text:'Score'
+                            MDLabel:
+                                text:'1'
+                            MDLabel:
+                                id: ca_pos1
+                                text:'0'
+                            MDLabel:
+                                text:'2'
+                            MDLabel:
+                                id: ca_pos2
+                                text:'0'
+                            MDLabel:
+                                text:'3'
+                            MDLabel:
+                                id: ca_pos3
+                                text:'0'
+                            MDLabel:
+                                text:'4'
+                            MDLabel:
+                                id: ca_pos4
+                                text:'0'
+                            MDLabel:
+                                text:'5'
+                            MDLabel:
+                                id: ca_pos5
+                                text:'0'
+                            MDLabel:
+                                text:'6'
+                            MDLabel:
+                                id: ca_pos6
+                                text:'0'
+                            MDLabel:
+                                text:'7'
+                            MDLabel:
+                                id: ca_pos7
+                                text:'0'
+                            MDLabel:
+                                text:'8'
+                            MDLabel:
+                                id: ca_pos8
+                                text:'0'
+                            MDLabel:
+                                text:'9'
+                            MDLabel:
+                                id: ca_pos9
+                                text:'0'
+                            MDLabel:
+                                text:'10'
+                            MDLabel:
+                                id: ca_pos10
+                                text:'0'
 
 
         MDBottomNavigationItem:
@@ -431,7 +491,69 @@ SManager:
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
-                    HiscoreTable:
+                    MDCard:
+                        size_hint:(0.7,0.95)
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        md_bg_color: (159/256,189/256,237/256,1)
+                        radius: [dp(25),dp(25),dp(25),dp(25)]
+                        orientation: 'vertical'
+                        GridLayout:
+                            cols:2
+                            rows:11
+                            MDLabel:
+                                text:'Position'
+                            MDLabel:
+                                text:'Score'
+                            MDLabel:
+                                text:'1'
+                            MDLabel:
+                                id: f_pos1
+                                text:'0'
+                            MDLabel:
+                                text:'2'
+                            MDLabel:
+                                id: f_pos2
+                                text:'0'
+                            MDLabel:
+                                text:'3'
+                            MDLabel:
+                                id: f_pos3
+                                text:'0'
+                            MDLabel:
+                                text:'4'
+                            MDLabel:
+                                id: f_pos4
+                                text:'0'
+                            MDLabel:
+                                text:'5'
+                            MDLabel:
+                                id: f_pos5
+                                text:'0'
+                            MDLabel:
+                                text:'6'
+                            MDLabel:
+                                id: f_pos6
+                                text:'0'
+                            MDLabel:
+                                text:'7'
+                            MDLabel:
+                                id: f_pos7
+                                text:'0'
+                            MDLabel:
+                                text:'8'
+                            MDLabel:
+                                id: f_pos8
+                                text:'0'
+                            MDLabel:
+                                text:'9'
+                            MDLabel:
+                                id: f_pos9
+                                text:'0'
+                            MDLabel:
+                                text:'10'
+                            MDLabel:
+                                id: f_pos10
+                                text:'0'
 
 
         MDBottomNavigationItem:
@@ -455,4 +577,66 @@ SManager:
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
-                    HiscoreTable:
+                    MDCard:
+                        size_hint:(0.7,0.95)
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        md_bg_color: (159/256,189/256,237/256,1)
+                        radius: [dp(25),dp(25),dp(25),dp(25)]
+                        orientation: 'vertical'
+                        GridLayout:
+                            cols:2
+                            rows:11
+                            MDLabel:
+                                text:'Position'
+                            MDLabel:
+                                text:'Score'
+                            MDLabel:
+                                text:'1'
+                            MDLabel:
+                                id: co_pos1
+                                text:'0'
+                            MDLabel:
+                                text:'2'
+                            MDLabel:
+                                id: co_pos2
+                                text:'0'
+                            MDLabel:
+                                text:'3'
+                            MDLabel:
+                                id: co_pos3
+                                text:'0'
+                            MDLabel:
+                                text:'4'
+                            MDLabel:
+                                id: co_pos4
+                                text:'0'
+                            MDLabel:
+                                text:'5'
+                            MDLabel:
+                                id: co_pos5
+                                text:'0'
+                            MDLabel:
+                                text:'6'
+                            MDLabel:
+                                id: co_pos6
+                                text:'0'
+                            MDLabel:
+                                text:'7'
+                            MDLabel:
+                                id: co_pos7
+                                text:'0'
+                            MDLabel:
+                                text:'8'
+                            MDLabel:
+                                id: co_pos8
+                                text:'0'
+                            MDLabel:
+                                text:'9'
+                            MDLabel:
+                                id: co_pos9
+                                text:'0'
+                            MDLabel:
+                                text:'10'
+                            MDLabel:
+                                id: co_pos10
+                                text:'0'

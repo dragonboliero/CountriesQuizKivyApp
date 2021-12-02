@@ -2,7 +2,6 @@
 To do list:
     *Change settings screen to high scores screen based on BottomNavigation.
     *Save player score (if hiscore) after leaving each mode.
-    *Load hiscores when entering HiScores menu.
     *Change direction of animations when switching between quiz modes and
     main menu.
     *Make the app working in the background.
@@ -72,8 +71,6 @@ class Continents(TemplateScreen):
 class HiScores(TemplateScreen):
     pass
 
-class CapitalsScore(Screen):
-    pass
 
 
 # Main application class
@@ -485,18 +482,58 @@ class CountriesQuiz(MDApp):
             counter = 0
             for row in data:
                 if counter == 0:
-                    self.capitals_hiscores.append(row.strip())
+                    row = row.strip().split(',')
+                    self.capitals_hiscores.append(row)
                 elif counter == 1:
-                    self.flags_hiscores.append(row.strip())
+                    row = row.strip().split(',')
+                    self.flags_hiscores.append(row)
                 elif counter == 2:
-                    self.continents_hiscores.append(row.strip())
+                    row = row.strip().split(',')
+                    self.continents_hiscores.append(row)
                 counter +=1
-            print(self.capitals_hiscores,self.flags_hiscores,self.continents_hiscores)
+            return self.capitals_hiscores,self.flags_hiscores,self.continents_hiscores
+
+    def fill_hiscores(self):
+        #load hiscores from the csv file
+        current_scores = self.get_scores()
+        #Fill hiscores in capitals hiscores table
+        self.root.get_screen('HSScreen').ids.ca_pos1.text = current_scores[0][0][1]
+        self.root.get_screen('HSScreen').ids.ca_pos2.text = current_scores[0][0][2]
+        self.root.get_screen('HSScreen').ids.ca_pos3.text = current_scores[0][0][3]
+        self.root.get_screen('HSScreen').ids.ca_pos4.text = current_scores[0][0][4]
+        self.root.get_screen('HSScreen').ids.ca_pos5.text = current_scores[0][0][5]
+        self.root.get_screen('HSScreen').ids.ca_pos6.text = current_scores[0][0][6]
+        self.root.get_screen('HSScreen').ids.ca_pos7.text = current_scores[0][0][7]
+        self.root.get_screen('HSScreen').ids.ca_pos8.text = current_scores[0][0][8]
+        self.root.get_screen('HSScreen').ids.ca_pos9.text = current_scores[0][0][9]
+        self.root.get_screen('HSScreen').ids.ca_pos10.text = current_scores[0][0][10]
+        #Fill hiscores in flags hiscores table
+        self.root.get_screen('HSScreen').ids.f_pos1.text = current_scores[1][0][1]
+        self.root.get_screen('HSScreen').ids.f_pos2.text = current_scores[1][0][2]
+        self.root.get_screen('HSScreen').ids.f_pos3.text = current_scores[1][0][3]
+        self.root.get_screen('HSScreen').ids.f_pos4.text = current_scores[1][0][4]
+        self.root.get_screen('HSScreen').ids.f_pos5.text = current_scores[1][0][5]
+        self.root.get_screen('HSScreen').ids.f_pos6.text = current_scores[1][0][6]
+        self.root.get_screen('HSScreen').ids.f_pos7.text = current_scores[1][0][7]
+        self.root.get_screen('HSScreen').ids.f_pos8.text = current_scores[1][0][8]
+        self.root.get_screen('HSScreen').ids.f_pos9.text = current_scores[1][0][9]
+        self.root.get_screen('HSScreen').ids.f_pos10.text = current_scores[1][0][10]
+        #Fill hiscores in continents table
+        self.root.get_screen('HSScreen').ids.co_pos1.text = current_scores[2][0][1]
+        self.root.get_screen('HSScreen').ids.co_pos2.text = current_scores[2][0][2]
+        self.root.get_screen('HSScreen').ids.co_pos3.text = current_scores[2][0][3]
+        self.root.get_screen('HSScreen').ids.co_pos4.text = current_scores[2][0][4]
+        self.root.get_screen('HSScreen').ids.co_pos5.text = current_scores[2][0][5]
+        self.root.get_screen('HSScreen').ids.co_pos6.text = current_scores[2][0][6]
+        self.root.get_screen('HSScreen').ids.co_pos7.text = current_scores[2][0][7]
+        self.root.get_screen('HSScreen').ids.co_pos8.text = current_scores[2][0][8]
+        self.root.get_screen('HSScreen').ids.co_pos9.text = current_scores[2][0][9]
+        self.root.get_screen('HSScreen').ids.co_pos10.text = current_scores[2][0][10]
 
 
     def testing(self):
         print("testing")
-
+        
 
 # Running the app
 CountriesQuiz().run()
