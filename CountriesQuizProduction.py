@@ -1,6 +1,5 @@
 '''
 To do list:
-    *Change settings screen to high scores screen based on BottomNavigation.
     *Save player score (if hiscore) after leaving each mode.
     *Change direction of animations when switching between quiz modes and
     main menu.
@@ -13,6 +12,8 @@ To do list:
 import csv
 # Random numbers generator module
 import random
+# Default dict for easier operations on dictionaries
+from collections import defaultdict
 
 import dataloader as dt
 
@@ -31,6 +32,8 @@ countries_list = []
 # Dictionary assigning number to each country
 c_number = {}
 c_number_counter = 0
+#Default dict for storing data from CSV file
+hiscores_columns = defaultdict(list)
 
 
 # Assigning data to appropriate variables
@@ -474,61 +477,53 @@ class CountriesQuiz(MDApp):
     def go_to_main(self, picker_object):
         self.root.current = 'MainScreen'
 
+
     def get_scores(self):
-        self.capitals_hiscores.clear()
-        self.flags_hiscores.clear()
-        self.continents_hiscores.clear()
         with open('data/hiscores.csv','r') as data:
-            counter = 0
-            for row in data:
-                if counter == 0:
-                    row = row.strip().split(',')
-                    self.capitals_hiscores.append(row)
-                elif counter == 1:
-                    row = row.strip().split(',')
-                    self.flags_hiscores.append(row)
-                elif counter == 2:
-                    row = row.strip().split(',')
-                    self.continents_hiscores.append(row)
-                counter +=1
-            return self.capitals_hiscores,self.flags_hiscores,self.continents_hiscores
+            reader = csv.DictReader(data)
+            for row in reader:
+                #Assigning values from each column to a list
+                for (column, value) in row.items():
+                    hiscores_columns[column].append(value)
+        return hiscores_columns
+
 
     def fill_hiscores(self):
         #load hiscores from the csv file
-        current_scores = self.get_scores()
+        current_scores = self.get_scores_vertical()
         #Fill hiscores in capitals hiscores table
-        self.root.get_screen('HSScreen').ids.ca_pos1.text = current_scores[0][0][1]
-        self.root.get_screen('HSScreen').ids.ca_pos2.text = current_scores[0][0][2]
-        self.root.get_screen('HSScreen').ids.ca_pos3.text = current_scores[0][0][3]
-        self.root.get_screen('HSScreen').ids.ca_pos4.text = current_scores[0][0][4]
-        self.root.get_screen('HSScreen').ids.ca_pos5.text = current_scores[0][0][5]
-        self.root.get_screen('HSScreen').ids.ca_pos6.text = current_scores[0][0][6]
-        self.root.get_screen('HSScreen').ids.ca_pos7.text = current_scores[0][0][7]
-        self.root.get_screen('HSScreen').ids.ca_pos8.text = current_scores[0][0][8]
-        self.root.get_screen('HSScreen').ids.ca_pos9.text = current_scores[0][0][9]
-        self.root.get_screen('HSScreen').ids.ca_pos10.text = current_scores[0][0][10]
+        self.root.get_screen('HSScreen').ids.ca_pos1.text = current_scores['capitals'][0]
+        self.root.get_screen('HSScreen').ids.ca_pos2.text = current_scores['capitals'][1]
+        self.root.get_screen('HSScreen').ids.ca_pos3.text = current_scores['capitals'][2]
+        self.root.get_screen('HSScreen').ids.ca_pos4.text = current_scores['capitals'][3]
+        self.root.get_screen('HSScreen').ids.ca_pos5.text = current_scores['capitals'][4]
+        self.root.get_screen('HSScreen').ids.ca_pos6.text = current_scores['capitals'][5]
+        self.root.get_screen('HSScreen').ids.ca_pos7.text = current_scores['capitals'][6]
+        self.root.get_screen('HSScreen').ids.ca_pos8.text = current_scores['capitals'][7]
+        self.root.get_screen('HSScreen').ids.ca_pos9.text = current_scores['capitals'][8]
+        self.root.get_screen('HSScreen').ids.ca_pos10.text = current_scores['capitals'][9]
         #Fill hiscores in flags hiscores table
-        self.root.get_screen('HSScreen').ids.f_pos1.text = current_scores[1][0][1]
-        self.root.get_screen('HSScreen').ids.f_pos2.text = current_scores[1][0][2]
-        self.root.get_screen('HSScreen').ids.f_pos3.text = current_scores[1][0][3]
-        self.root.get_screen('HSScreen').ids.f_pos4.text = current_scores[1][0][4]
-        self.root.get_screen('HSScreen').ids.f_pos5.text = current_scores[1][0][5]
-        self.root.get_screen('HSScreen').ids.f_pos6.text = current_scores[1][0][6]
-        self.root.get_screen('HSScreen').ids.f_pos7.text = current_scores[1][0][7]
-        self.root.get_screen('HSScreen').ids.f_pos8.text = current_scores[1][0][8]
-        self.root.get_screen('HSScreen').ids.f_pos9.text = current_scores[1][0][9]
-        self.root.get_screen('HSScreen').ids.f_pos10.text = current_scores[1][0][10]
+        self.root.get_screen('HSScreen').ids.f_pos1.text = current_scores['flags'][0]
+        self.root.get_screen('HSScreen').ids.f_pos2.text = current_scores['flags'][1]
+        self.root.get_screen('HSScreen').ids.f_pos3.text = current_scores['flags'][2]
+        self.root.get_screen('HSScreen').ids.f_pos4.text = current_scores['flags'][3]
+        self.root.get_screen('HSScreen').ids.f_pos5.text = current_scores['flags'][4]
+        self.root.get_screen('HSScreen').ids.f_pos6.text = current_scores['flags'][5]
+        self.root.get_screen('HSScreen').ids.f_pos7.text = current_scores['flags'][6]
+        self.root.get_screen('HSScreen').ids.f_pos8.text = current_scores['flags'][7]
+        self.root.get_screen('HSScreen').ids.f_pos9.text = current_scores['flags'][8]
+        self.root.get_screen('HSScreen').ids.f_pos10.text = current_scores['flags'][9]
         #Fill hiscores in continents table
-        self.root.get_screen('HSScreen').ids.co_pos1.text = current_scores[2][0][1]
-        self.root.get_screen('HSScreen').ids.co_pos2.text = current_scores[2][0][2]
-        self.root.get_screen('HSScreen').ids.co_pos3.text = current_scores[2][0][3]
-        self.root.get_screen('HSScreen').ids.co_pos4.text = current_scores[2][0][4]
-        self.root.get_screen('HSScreen').ids.co_pos5.text = current_scores[2][0][5]
-        self.root.get_screen('HSScreen').ids.co_pos6.text = current_scores[2][0][6]
-        self.root.get_screen('HSScreen').ids.co_pos7.text = current_scores[2][0][7]
-        self.root.get_screen('HSScreen').ids.co_pos8.text = current_scores[2][0][8]
-        self.root.get_screen('HSScreen').ids.co_pos9.text = current_scores[2][0][9]
-        self.root.get_screen('HSScreen').ids.co_pos10.text = current_scores[2][0][10]
+        self.root.get_screen('HSScreen').ids.co_pos1.text = current_scores['continents'][0]
+        self.root.get_screen('HSScreen').ids.co_pos2.text = current_scores['continents'][1]
+        self.root.get_screen('HSScreen').ids.co_pos3.text = current_scores['continents'][2]
+        self.root.get_screen('HSScreen').ids.co_pos4.text = current_scores['continents'][3]
+        self.root.get_screen('HSScreen').ids.co_pos5.text = current_scores['continents'][4]
+        self.root.get_screen('HSScreen').ids.co_pos6.text = current_scores['continents'][5]
+        self.root.get_screen('HSScreen').ids.co_pos7.text = current_scores['continents'][6]
+        self.root.get_screen('HSScreen').ids.co_pos8.text = current_scores['continents'][7]
+        self.root.get_screen('HSScreen').ids.co_pos9.text = current_scores['continents'][8]
+        self.root.get_screen('HSScreen').ids.co_pos10.text = current_scores['continents'][9]
 
 
     def testing(self):
