@@ -5,16 +5,16 @@ To do list:
     main menu.
     *Make the app working in the background.
 
+Possible additional features:
+    *Online leaderboard with player nicknames and hiscores
+    *Translation to other languages.
 '''
 
 #!/usr/bin/python3
-# Module for importing csv files
-import csv
 # Random numbers generator module
 import random
-# Default dict for easier operations on dictionaries
-from collections import defaultdict
 
+#Custom module for loading data needed from files
 import dataloader as dt
 
 from kivymd.app import MDApp
@@ -29,15 +29,9 @@ from kivymd.uix.snackbar import Snackbar
 c_dict = {}
 #List for performing operations on countries data
 countries_list = []
-# Dictionary assigning number to each country
-c_number = {}
-c_number_counter = 0
-#Default dict for storing data from CSV file
-hiscores_columns = defaultdict(list)
-
 
 # Assigning data to appropriate variables
-countries_list = dt.data_from_csv(c_dict, c_number, c_number_counter,countries_list)
+countries_list = dt.data_from_csv(c_dict, countries_list)
 
 
 # This method makes device keyboard appear below main screen
@@ -52,7 +46,7 @@ class SManager(ScreenManager):
 
 
 class TemplateScreen(Screen):
-    test_list = countries_list
+    pass
 
 
 class MainMenu(TemplateScreen):
@@ -82,15 +76,11 @@ class CountriesQuiz(MDApp):
         self.theme_cls.primary_palette = "Indigo"
         # Setting up first values of screen variables
         self.score = 0
-        self.contry_name = ''
+        self.country_name = ''
         self.correct_answers = 0
         self.answer_streak = 0
-        # Default backgrund RGBA value
+        # Default backgrund RGBA value. Used in kv file
         self.bg_color = (78/255, 99/255, 194/255, 1)
-        #Arrays for storing hiscores
-        self.capitals_hiscores = []
-        self.flags_hiscores = []
-        self.continents_hiscores = []
         # Loading .kv file
         self.uix = Builder.load_file('uix.kv')
         return self.uix
@@ -140,7 +130,6 @@ class CountriesQuiz(MDApp):
         countries_list.clear()
         for i in c_dict.keys():
             countries_list.append(i)
-            
         print(f"List length after reloading: {len(countries_list)}\n")
         return countries_list
 
@@ -157,11 +146,6 @@ class CountriesQuiz(MDApp):
             self.add_canswer()
             self.add_streak(True)
             self.clear_answer_field()
-            '''Testing animation displayed after correct answer, to be
-               completed later.
-            self.root.get_screen('CapitalsScreen').ids.gif.opacity = 1
-            self.root.get_screen('CapitalsScreen').ids.gif.anim_delay = 0.1
-            '''
             #Prompt displayed after correct answer
             user_answer = Snackbar(
                 text="Congratulations, correct answer.",
@@ -169,7 +153,6 @@ class CountriesQuiz(MDApp):
                 pos_hint={'center_x': 0.5, 'center_y': 0.6},
                 bg_color=(0.2, 1, 0.3, 0.2),
                 font_size="15sp").open()
-
         else:
             print('Wrong answer')
             # Zero correct answer streak
@@ -291,8 +274,7 @@ class CountriesQuiz(MDApp):
             'FlagsScreen').ids.country1, self.root.get_screen(
             'FlagsScreen').ids.country2,
             self.root.get_screen(
-            'FlagsScreen').ids.country3]
-        
+            'FlagsScreen').ids.country3]        
         #Check how many countries are available and randomize appropriate
         #number of countries.
         countries_in_the_list = len(countries_list)
@@ -312,7 +294,6 @@ class CountriesQuiz(MDApp):
             countries_to_randomize = 0
             self.root.get_screen(
             'FlagsScreen').ids.country1.opacity = 0
-
         #Make all flags visible again after reloading countries list
         if countries_in_the_list == len(c_dict.keys()):
             self.root.get_screen(
@@ -321,17 +302,13 @@ class CountriesQuiz(MDApp):
             'FlagsScreen').ids.country2.opacity = 1
             self.root.get_screen(
             'FlagsScreen').ids.country3.opacity = 1                                    
-
         # Randomly pick a place where flag with correct answer will be placed
         correct_flag_place = random.randrange(0, countries_to_randomize+1)
-
         #List storing chosen countries
         chosen_countries = []
         chosen_countries.append(self.flag_name)
-
         # Assigning flag images to appropriate kivy widget
         for i in range(0, countries_to_randomize+1):
-
             # Correct answer flag
             if i == correct_flag_place:
                 cf_path = 'data/flags/{}_flag-jpg-xs.jpg'.format(
@@ -343,7 +320,6 @@ class CountriesQuiz(MDApp):
                    flags may overlap as they are no removed from 
                    the list after being used. 
                 '''
-                
                 random_flag = self.pick_country()
                 while random_flag in chosen_countries:
                     random_flag = self.pick_country()
@@ -438,7 +414,6 @@ class CountriesQuiz(MDApp):
         if image_number == 5:
             clicked_continent = self.root.get_screen(
                 'ContinentsScreen').ids.sa.source
-
         '''Index is based continent image path currently 
            'data/continents/continent.jpg'. Fitst 16 are for the path and -4 for
            file extension
@@ -472,25 +447,10 @@ class CountriesQuiz(MDApp):
                 'ContinentsScreen').ids.continents_toolbar.streak = 'Current streak: 0'
             print('false')
 
-
-    # Method which allows to go back to main menu screen from hiscores screen
-    def go_to_main(self, picker_object):
-        self.root.current = 'MainScreen'
-
-
-    def get_scores(self):
-        with open('data/hiscores.csv','r') as data:
-            reader = csv.DictReader(data)
-            for row in reader:
-                #Assigning values from each column to a list
-                for (column, value) in row.items():
-                    hiscores_columns[column].append(value)
-        return hiscores_columns
-
-
+            
     def fill_hiscores(self):
         #load hiscores from the csv file
-        current_scores = self.get_scores_vertical()
+        current_scores = dt.get_scores()
         #Fill hiscores in capitals hiscores table
         self.root.get_screen('HSScreen').ids.ca_pos1.text = current_scores['capitals'][0]
         self.root.get_screen('HSScreen').ids.ca_pos2.text = current_scores['capitals'][1]

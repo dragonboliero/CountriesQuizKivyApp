@@ -70,7 +70,7 @@ SManager:
                 text:"Capitals"
                 subtext:"Guess all capitals of the world."
                 image:'data/icons/capitals_mode.png'
-                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answer = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'; app.assign_flag()
+                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answers = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'; app.assign_flag()
             MainMenuButton:
                 text:"Flags"
                 subtext:"Do you know flags of all countries?"
