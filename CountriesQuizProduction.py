@@ -447,9 +447,32 @@ class CountriesQuiz(MDApp):
                 'ContinentsScreen').ids.continents_toolbar.streak = 'Current streak: 0'
             print('false')
 
-            
+
+    def check_if_hiscore(self,mode,user_score):
+        #Load hiscores from the csv file
+        current_scores = dt.get_scores()
+        #Check if the current user score is higher than
+        #any score in hiscores file.
+        for hiscore in range(0,len(current_scores[mode])):
+            if int(user_score) > int(current_scores[mode][hiscore]):
+                #Add score in current place
+                current_scores[mode].insert(hiscore,user_score)
+                #Remove last element from the list of hiscores for 
+                #this mode.
+                current_scores[mode].pop()
+                #Stop searching.
+                output_str = 'capitals,flags,continents\n'
+                #Save new score to file and break for loop
+                for current_score in range(0,10):
+                    output_str = output_str + str(current_scores['capitals'][current_score]) + ',' + str(current_scores['flags'][current_score]) + ',' + str(current_scores['continents'][current_score]) + '\n'
+                with open('data/hiscores.csv','w') as data_to_write:
+                    data_to_write.write(output_str)
+                break
+
+
+
     def fill_hiscores(self):
-        #load hiscores from the csv file
+        #Load hiscores from the csv file
         current_scores = dt.get_scores()
         #Fill hiscores in capitals hiscores table
         self.root.get_screen('HSScreen').ids.ca_pos1.text = current_scores['capitals'][0]

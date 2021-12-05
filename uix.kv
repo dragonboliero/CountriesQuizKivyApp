@@ -136,7 +136,8 @@ SManager:
             score: 'Score: 0'
             correct_answers: 'Correct answers: 0'
             streak: 'Current streak: 0'
-            question: 'What is the capital of: ' 
+            question: 'What is the capital of: '
+            quiz_mode:'capitals' 
 
         GridLayout:
             rows:3
@@ -191,13 +192,14 @@ SManager:
     correct_answers:''
     streak:''
     question:''
+    quiz_mode:''
 
     GridLayout:
         rows: 2
         BoxLayout:
             orientation: 'horizontal'
             MDIconButton:
-                on_release: app.root.current = 'MainScreen'
+                on_release: app.root.current = 'MainScreen';app.check_if_hiscore(root.quiz_mode,root.score[7:])
             MDCard:
                 score: root.score
                 md_bg_color: (140/256,189/256,237/256,1)
@@ -240,6 +242,7 @@ SManager:
             correct_answers: 'Correct answers: 0'
             streak: 'Current streak: 0'
             question: 'What is the flag of: '
+            quiz_mode:'flags'
 
         GridLayout:
             rows: 4
@@ -277,6 +280,7 @@ SManager:
             correct_answers: 'Correct answers: 0'
             streak: 'Current streak: 0'
             question: 'In which continent lies: '
+            quiz_mode:'continents'
 
         GridLayout:
             rows: 3
