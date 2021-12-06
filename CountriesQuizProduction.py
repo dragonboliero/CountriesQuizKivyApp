@@ -1,9 +1,10 @@
 '''
 To do list:
-    *Save player score (if hiscore) after leaving each mode.
+    *Redesign top toolbar in hiscores menu.
+    *Find font that will better fit the app.
     *Change direction of animations when switching between quiz modes and
     main menu.
-    *Make the app working in the background.
+    *Make code revision and optimization.
 
 Possible additional features:
     *Online leaderboard with player nicknames and hiscores
@@ -22,6 +23,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivymd.uix.snackbar import Snackbar
+from kivymd.uix.dialog import MDDialog
 
 
 
@@ -451,10 +453,13 @@ class CountriesQuiz(MDApp):
     def check_if_hiscore(self,mode,user_score):
         #Load hiscores from the csv file
         current_scores = dt.get_scores()
+        #Store new hiscore position on the list
+        positon = 0 
         #Check if the current user score is higher than
         #any score in hiscores file.
         for hiscore in range(0,len(current_scores[mode])):
             if int(user_score) > int(current_scores[mode][hiscore]):
+                position = hiscore+1
                 #Add score in current place
                 current_scores[mode].insert(hiscore,user_score)
                 #Remove last element from the list of hiscores for 
@@ -468,8 +473,25 @@ class CountriesQuiz(MDApp):
                 with open('data/hiscores.csv','w') as data_to_write:
                     data_to_write.write(output_str)
                 break
+        #Assign different position ending depending on which position the new
+        # hiscore will be assigned.   
+        score_endings = ['st','nd','rd','th']
+        ending = ''
+        if position == 1:
+            ending = score_endings[0]  
+        elif position == 2:
+            ending = score_endings[1]
+        elif position == 3:
+            ending = score_endings[2]
+        else:
+            ending = score_endings[3]
 
-
+        inform_about_new_hiscore = MDDialog(
+            text = f"Congratulations {user_score} pts is a new high score\n and {position}{ending} best score in {mode.capitalize()} mode",
+            radius=[20,20,20,20],
+            md_bg_color = (19/255,209/255,82/255,1)
+        )
+        inform_about_new_hiscore.open()
 
     def fill_hiscores(self):
         #Load hiscores from the csv file
