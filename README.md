@@ -14,8 +14,10 @@
 - [KivyMD](https://kivymd.readthedocs.io/en/latest/)
 <br/><br/>
 ## Screenshoots
-![Main menu](https://i.imgur.com/yNLpX7t.png?1)
+![Main menu](https://i.imgur.com/8soHhiL.png?1)
 ![Capitals quiz](https://i.imgur.com/r7friNS.png?1)
 <br/>
 ![Flags quiz](https://i.imgur.com/iaXvFpI.png?1)
 ![Continents quiz](https://i.imgur.com/UqQmm0e.png?1)
+<br>
+![Hiscores menu](https://i.imgur.com/ymoOx7e.png?1)

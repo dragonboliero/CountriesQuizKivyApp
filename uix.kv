@@ -7,7 +7,7 @@
 <MDIconButton>
     icon: 'backspace-outline'
     pos_hint:{'center_y':0.55}
-    on_press: app.reload_countries_list()
+    on_press:app.reload_countries_list()
 
 #Predefined values for lables
 <MDLabel>
@@ -70,22 +70,22 @@ SManager:
                 text:"Capitals"
                 subtext:"Guess all capitals of the world."
                 image:'data/icons/capitals_mode.png'
-                on_release: root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answers = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'; app.assign_flag()
+                on_release: app.root.transition.direction = 'left'; root.manager.current = 'CapitalsScreen'; app.assign_country_to_label(0); root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.correct_answers = 'Correct answers: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.streak = 'Current streak: 0'; root.manager.get_screen('CapitalsScreen').ids.capitals_toolbar.score = 'Score: 0'; app.assign_flag()
             MainMenuButton:
                 text:"Flags"
                 subtext:"Do you know flags of all countries?"
                 image:'data/icons/flags_mode.png'
-                on_release: root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_toolbar.score='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.streak='Current streak: 0' 
+                on_release: app.root.transition.direction = 'left'; root.manager.current = 'FlagsScreen'; app.pick_flag(); root.manager.get_screen('FlagsScreen').ids.flag_toolbar.score='Score: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('FlagsScreen').ids.flag_toolbar.streak='Current streak: 0' 
             MainMenuButton:
                 text:"Continents"
                 subtext:"Pick continents for all countries."
                 image:'data/icons/continents_mode.png'
-                on_release: root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.score='Score: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.streak='Current streak: 0';
+                on_release: app.root.transition.direction = 'left'; root.manager.current = 'ContinentsScreen'; app.assign_country_to_label(2);root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.score='Score: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.correct_answers='Correct answers: 0';root.manager.get_screen('ContinentsScreen').ids.continents_toolbar.streak='Current streak: 0';
             MainMenuButton:
                 text:"High scores"
                 subtext:"Check your best scores in different modes."
-                image:'data/icons/settings.png'
-                on_release: root.manager.current = 'HSScreen';app.fill_hiscores()
+                image:'data/icons/hiscores.png'
+                on_release: app.root.transition.direction = 'left'; root.manager.current = 'HSScreen';app.fill_hiscores()
 
         MDBoxLayout:
             orientation:'vertical'
@@ -193,16 +193,17 @@ SManager:
     streak:''
     question:''
     quiz_mode:''
+    card_bg_color: (140/256,189/256,237/256,1)
 
     GridLayout:
         rows: 2
         BoxLayout:
             orientation: 'horizontal'
             MDIconButton:
-                on_release: app.root.current = 'MainScreen';app.check_if_hiscore(root.quiz_mode,root.score[7:])
+                on_release: app.root.transition.direction = 'right';app.root.current = 'MainScreen';app.check_if_hiscore(root.quiz_mode,root.score[7:]);
             MDCard:
                 score: root.score
-                md_bg_color: (140/256,189/256,237/256,1)
+                md_bg_color: root.card_bg_color
                 elevation: 0
                 radius: [dp(40),dp(0),dp(0),dp(40)]
                 MDLabel:
@@ -210,14 +211,14 @@ SManager:
                     font_style:'Button'
             MDCard:
                 score: root.score
-                md_bg_color: (140/256,189/256,237/256,1)
+                md_bg_color: root.card_bg_color
                 elevation: 0
                 MDLabel:
                     text: root.correct_answers
                     font_style:'Button'
             MDCard:
                 score: root.score
-                md_bg_color: (140/256,189/256,237/256,1)
+                md_bg_color: root.card_bg_color
                 elevation: 0
                 radius: [dp(0),dp(40),dp(40),dp(0)]
                 MDLabel:
@@ -391,7 +392,7 @@ SManager:
         MDBottomNavigationItem:
             name: "CapitalsScore"
             text: 'Capitals'
-            icon: 'android'
+            icon: 'eiffel-tower'
             MDCard:
                 size_hint: (1,1)
                 pos_hint: {"center_x":0.5,"center_y":0.5}
@@ -406,6 +407,7 @@ SManager:
                     correct_answers: ''
                     streak: ''
                     question: 'Top 10 scores in capitals quiz mode'   
+                    card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
@@ -477,7 +479,7 @@ SManager:
         MDBottomNavigationItem:
             name: "flags_score"
             text: 'Flags'
-            icon: 'android'
+            icon: 'flag'
             MDCard:
                 size_hint: (1,1)
                 pos_hint: {"center_x":0.5,"center_y":0.5}
@@ -492,6 +494,7 @@ SManager:
                     correct_answers: ''
                     streak: ''
                     question: 'Top 10 scores in flags quiz mode'   
+                    card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
@@ -563,7 +566,7 @@ SManager:
         MDBottomNavigationItem:
             name: "continents_score"
             text: 'Continents'
-            icon: 'android'
+            icon: 'earth'
             MDCard:
                 size_hint: (1,1)
                 pos_hint: {"center_x":0.5,"center_y":0.5}
@@ -578,6 +581,7 @@ SManager:
                     correct_answers: ''
                     streak: ''
                     question: 'Top 10 scores in continents quiz mode'   
+                    card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}

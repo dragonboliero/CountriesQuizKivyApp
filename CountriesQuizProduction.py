@@ -2,8 +2,6 @@
 To do list:
     *Redesign top toolbar in hiscores menu.
     *Find font that will better fit the app.
-    *Change direction of animations when switching between quiz modes and
-    main menu.
     *Make code revision and optimization.
 
 Possible additional features:
@@ -467,31 +465,32 @@ class CountriesQuiz(MDApp):
                 current_scores[mode].pop()
                 #Stop searching.
                 output_str = 'capitals,flags,continents\n'
-                #Save new score to file and break for loop
+                #Save new score to file
                 for current_score in range(0,10):
                     output_str = output_str + str(current_scores['capitals'][current_score]) + ',' + str(current_scores['flags'][current_score]) + ',' + str(current_scores['continents'][current_score]) + '\n'
                 with open('data/hiscores.csv','w') as data_to_write:
                     data_to_write.write(output_str)
-                break
-        #Assign different position ending depending on which position the new
-        # hiscore will be assigned.   
-        score_endings = ['st','nd','rd','th']
-        ending = ''
-        if position == 1:
-            ending = score_endings[0]  
-        elif position == 2:
-            ending = score_endings[1]
-        elif position == 3:
-            ending = score_endings[2]
-        else:
-            ending = score_endings[3]
+                #Assign different position ending depending on which position the new
+                # hiscore will be assigned.   
+                score_endings = ['st','nd','rd','th']
+                ending = ''
+                if position == 1:
+                    ending = score_endings[0]  
+                elif position == 2:
+                    ending = score_endings[1]
+                elif position == 3:
+                    ending = score_endings[2]
+                else:
+                    ending = score_endings[3]
 
-        inform_about_new_hiscore = MDDialog(
-            text = f"Congratulations {user_score} pts is a new high score\n and {position}{ending} best score in {mode.capitalize()} mode",
-            radius=[20,20,20,20],
-            md_bg_color = (19/255,209/255,82/255,1)
-        )
-        inform_about_new_hiscore.open()
+                inform_about_new_hiscore = MDDialog(
+                    text = f"Congratulations {user_score} pts is a new high score\n and {position}{ending} best score in {mode.capitalize()} mode",
+                    radius=[20,20,20,20],
+                    md_bg_color = (19/255,209/255,82/255,1)
+                )
+                inform_about_new_hiscore.open()
+                #break from the loop
+                break
 
     def fill_hiscores(self):
         #Load hiscores from the csv file
