@@ -316,71 +316,22 @@ SManager:
                 on_press: app.check_continent(5);app.assign_country_to_label(2)
 
 
-
-<HiscoreTable@MDCard>:
-    size_hint:(0.7,0.95)
-    pos_hint:{'center_x':0.5,'center_y':0.5}
+<HiScoreToolbar@MDCard>:
     md_bg_color: (159/256,189/256,237/256,1)
-    radius: [dp(25),dp(25),dp(25),dp(25)]
-    orientation: 'vertical'
-    GridLayout:
-        cols:2
-        rows:11
-        MDLabel:
-            text:'Position'
-        MDLabel:
-            text:'Score'
-        MDLabel:
-            text:'1'
-        MDLabel:
-            id: pos1
-            text:'0'
-        MDLabel:
-            text:'2'
-        MDLabel:
-            id: pos2
-            text:'0'
-        MDLabel:
-            text:'3'
-        MDLabel:
-            id: pos3
-            text:'0'
-        MDLabel:
-            text:'4'
-        MDLabel:
-            id: pos4
-            text:'0'
-        MDLabel:
-            text:'5'
-        MDLabel:
-            id: pos5
-            text:'0'
-        MDLabel:
-            text:'6'
-        MDLabel:
-            id: pos6
-            text:'0'
-        MDLabel:
-            text:'7'
-        MDLabel:
-            id: pos7
-            text:'0'
-        MDLabel:
-            text:'8'
-        MDLabel:
-            id: pos8
-            text:'0'
-        MDLabel:
-            text:'9'
-        MDLabel:
-            id: pos9
-            text:'0'
-        MDLabel:
-            text:'10'
-        MDLabel:
-            id: pos10
-            text:'0'
+    radius:[dp(0),dp(0),dp(40),dp(40)]
+    size_hint: 1,0.2
+    elevation: 30
+    mode_name:''
+    card_bg_color: (140/256,189/256,237/256,1)
 
+    FloatLayout:
+        MDIconButton:
+            on_release: app.root.transition.direction = 'right';app.root.current = 'MainScreen';
+            pos_hint: {"center_x":0.06,"center_y":0.78}
+        MDLabel:
+            text: root.mode_name
+            font_style:"H6"
+            pos_hint: {"center_x":0.54,"center_y":0.78}
 
 
 <HiScores>
@@ -400,13 +351,9 @@ SManager:
             MDBoxLayout:
                 orientation: 'vertical'
 
-                QuizModeToolbar:
+                HiScoreToolbar:
                     size_hint_y: 0.15
-                    id: capScoreToolbar
-                    score: ''
-                    correct_answers: ''
-                    streak: ''
-                    question: 'Top 10 scores in capitals quiz mode'   
+                    mode_name: 'Top 10 scores in capitals quiz mode'   
                     card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
@@ -487,13 +434,9 @@ SManager:
             MDBoxLayout:
                 orientation: 'vertical'
 
-                QuizModeToolbar:
+                HiScoreToolbar:
                     size_hint_y: 0.15
-                    id: flaScoreToolbar
-                    score: ''
-                    correct_answers: ''
-                    streak: ''
-                    question: 'Top 10 scores in flags quiz mode'   
+                    mode_name: 'Top 10 scores in flags quiz mode'   
                     card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
@@ -574,13 +517,9 @@ SManager:
             MDBoxLayout:
                 orientation: 'vertical'
 
-                QuizModeToolbar:
+                HiScoreToolbar:
                     size_hint_y: 0.15
-                    id: conScoreToolbar
-                    score: ''
-                    correct_answers: ''
-                    streak: ''
-                    question: 'Top 10 scores in continents quiz mode'   
+                    mode_name: 'Top 10 scores in continents quiz mode'   
                     card_bg_color: (159/256,189/256,237/256,1)
                 MDBoxLayout:
                     size_hint: (0.9,0.8)

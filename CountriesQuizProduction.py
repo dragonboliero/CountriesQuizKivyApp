@@ -1,6 +1,5 @@
 '''
 To do list:
-    *Redesign top toolbar in hiscores menu.
     *Find font that will better fit the app.
     *Make code revision and optimization.
 
