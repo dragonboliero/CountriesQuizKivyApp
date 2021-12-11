@@ -71,8 +71,6 @@ def get_global_hiscores(username):
     else:
         global_scores_dictionary[username].append({'continents':continents_sheet.cell(user_continents.row,user_continents.col+1).value})
 
-    print(global_scores_dictionary[username])
     return global_scores_dictionary
 
 
-get_global_hiscores('Andre')

@@ -518,6 +518,17 @@ class CountriesQuiz(MDApp):
         self.root.get_screen('HSScreen').ids.ca_pos10.text = current_scores['capitals'][9][1]
         self.root.get_screen('HSScreen').ids.ca_usr.text = current_scores['placeholder'][0]['capitals']
         #Fill hiscores in flags hiscores table
+        self.root.get_screen('HSScreen').ids.f_usr1.text = current_scores['flags'][0][0]
+        self.root.get_screen('HSScreen').ids.f_usr2.text = current_scores['flags'][1][0]
+        self.root.get_screen('HSScreen').ids.f_usr3.text = current_scores['flags'][2][0]
+        self.root.get_screen('HSScreen').ids.f_usr4.text = current_scores['flags'][3][0]
+        self.root.get_screen('HSScreen').ids.f_usr5.text = current_scores['flags'][4][0]
+        self.root.get_screen('HSScreen').ids.f_usr6.text = current_scores['flags'][5][0]
+        self.root.get_screen('HSScreen').ids.f_usr7.text = current_scores['flags'][6][0]
+        self.root.get_screen('HSScreen').ids.f_usr8.text = current_scores['flags'][7][0]
+        self.root.get_screen('HSScreen').ids.f_usr9.text = current_scores['flags'][8][0]
+        self.root.get_screen('HSScreen').ids.f_usr10.text = current_scores['flags'][9][0]
+        self.root.get_screen('HSScreen').ids.f_usr.text = 'placeholder'
         self.root.get_screen('HSScreen').ids.f_pos1.text = current_scores['flags'][0][1]
         self.root.get_screen('HSScreen').ids.f_pos2.text = current_scores['flags'][1][1]
         self.root.get_screen('HSScreen').ids.f_pos3.text = current_scores['flags'][2][1]
@@ -528,7 +539,19 @@ class CountriesQuiz(MDApp):
         self.root.get_screen('HSScreen').ids.f_pos8.text = current_scores['flags'][7][1]
         self.root.get_screen('HSScreen').ids.f_pos9.text = current_scores['flags'][8][1]
         self.root.get_screen('HSScreen').ids.f_pos10.text = current_scores['flags'][9][1]
+        self.root.get_screen('HSScreen').ids.f_ca_usr.text = current_scores['placeholder'][1]['flags']
         #Fill hiscores in continents table
+        self.root.get_screen('HSScreen').ids.co_usr1.text = current_scores['continents'][0][0]
+        self.root.get_screen('HSScreen').ids.co_usr2.text = current_scores['continents'][1][0]
+        self.root.get_screen('HSScreen').ids.co_usr3.text = current_scores['continents'][2][0]
+        self.root.get_screen('HSScreen').ids.co_usr4.text = current_scores['continents'][3][0]
+        self.root.get_screen('HSScreen').ids.co_usr5.text = current_scores['continents'][4][0]
+        self.root.get_screen('HSScreen').ids.co_usr6.text = current_scores['continents'][5][0]
+        self.root.get_screen('HSScreen').ids.co_usr7.text = current_scores['continents'][6][0]
+        self.root.get_screen('HSScreen').ids.co_usr8.text = current_scores['continents'][7][0]
+        self.root.get_screen('HSScreen').ids.co_usr9.text = current_scores['continents'][8][0]
+        self.root.get_screen('HSScreen').ids.co_usr10.text = current_scores['continents'][9][0]
+        self.root.get_screen('HSScreen').ids.co_usr.text = 'placeholder'
         self.root.get_screen('HSScreen').ids.co_pos1.text = current_scores['continents'][0][1]
         self.root.get_screen('HSScreen').ids.co_pos2.text = current_scores['continents'][1][1]
         self.root.get_screen('HSScreen').ids.co_pos3.text = current_scores['continents'][2][1]
@@ -539,6 +562,7 @@ class CountriesQuiz(MDApp):
         self.root.get_screen('HSScreen').ids.co_pos8.text = current_scores['continents'][7][1]
         self.root.get_screen('HSScreen').ids.co_pos9.text = current_scores['continents'][8][1]
         self.root.get_screen('HSScreen').ids.co_pos10.text = current_scores['continents'][9][1]
+        self.root.get_screen('HSScreen').ids.co_ca_usr.text = current_scores['placeholder'][2]['continents']
 
 
     def testing(self):
