@@ -74,3 +74,16 @@ def get_global_hiscores(username):
     return global_scores_dictionary
 
 
+#Function for loading app settings from settings file
+def get_settings():
+    current_values = {}
+    raw_values = []
+    with open('data/settings.set') as settings:
+        raw_values = [value.strip().split(',') for value in settings]
+
+    for raw_value in raw_values:
+        current_values[raw_value[0]] = raw_value[1]
+
+    return current_values
+
+

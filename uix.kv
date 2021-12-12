@@ -24,12 +24,12 @@
 
 #Screen manager containing all available screens
 SManager:
-    id: 'screenm'
     MainMenu:
     Capitals:
     Flags:
     Continents:
     HiScores:
+    AppSettings:
     TemplateScreen:
 
 
@@ -87,12 +87,17 @@ SManager:
                 image:'data/icons/hiscores.png'
                 on_release: app.root.transition.direction = 'left'; root.manager.current = 'HSScreen';app.fill_hiscores()
 
-        MDBoxLayout:
-            orientation:'vertical'
+        GridLayout:
+            cols:2
+            #orientation:'vertical'
             size_hint_y:0.10
             MDLabel:
                 text:"Copyright© Wojciech Milczarek 2021"
                 font_style:'Overline'
+            MDIconButton:
+                icon:'data/icons/settings.png'
+                pos_hint_y:1
+                on_release: app.root.transition.direction = 'left'; root.manager.current = 'AppSettings';
 
 
 
@@ -332,7 +337,6 @@ SManager:
             text: root.mode_name
             font_style:"H6"
             pos_hint: {"center_x":0.54,"center_y":0.78}
-
 
 <HiScores>
     name: 'HSScreen'
@@ -743,4 +747,22 @@ SManager:
                             MDLabel:
                                 id:co_ca_usr
                                 text:'0'
-                                    
+
+<AppSettings>
+    name: 'AppSettings'
+    MDBoxLayout:
+        orientation: 'vertical'
+        HiScoreToolbar:
+            size_hint_y:0.15
+            mode_name:'Application settings'
+            card_bg_color: (159/256,189/256,237/256,1)
+        MDBoxLayout:
+            orientation:'vertical'
+            size_hint_y:0.8
+            MDLabel:
+                text:'Username'
+            MDTextFieldRect:
+                id: username
+                text: app.current_settings['username'] 
+                size_hint: 1, None
+                height:"30dp"
