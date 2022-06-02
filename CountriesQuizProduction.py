@@ -149,26 +149,22 @@ class CountriesQuiz(MDApp):
             user_answer = Snackbar(
                 text="Congratulations, correct answer.",
                 snackbar_x="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.6},
+                pos_hint={'center_x': 0.5, 'center_y': 0.575},
                 bg_color=(0.2, 1, 0.3, 0.2),
-                font_size="15sp").open()
+                font_size=self.root.width/26).open()
         else:
             print('Wrong answer')
             # Zero correct answer streak
             self.add_streak(False)
             self.clear_answer_field()
-            if len(c_dict[self.country_name]['capital']) < 10:
-                snack_font_size = "15sp"
-            else:
-                snack_font_size = "10sp"
             #Prompt displayed after wrong answer
             user_answer = Snackbar(
                 text=f"Wrong answer. It's {c_dict[self.country_name]['capital']}.",
                 snackbar_x="40dp",
                 snackbar_y="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.6},
+                pos_hint={'center_x': 0.5, 'center_y': 0.575},
                 bg_color=(1, 0, 0, 0.2),
-                font_size=snack_font_size).open()
+                font_size=self.root.width/26).open()
 
 
     '''Multi-mode method adding points to user score.The indexing [7:] is 
@@ -483,9 +479,9 @@ class CountriesQuiz(MDApp):
                     ending = score_endings[3]
 
                 inform_about_new_hiscore = MDDialog(
-                    text = f"Congratulations {user_score} pts is a new high score\n and {position}{ending} best score in {mode.capitalize()} mode",
+                    text = f"Congratulations [color=#13D152]{user_score} pts[/color] is a [color=#13D152]new high score[/color]\n and [color=#13D152]{position}{ending}[/color] best score in {mode.capitalize()} mode",
                     radius=[20,20,20,20],
-                    md_bg_color = (19/255,209/255,82/255,1)
+                    #md_bg_color = (19/255,209/255,82/255,1)
                 )
                 inform_about_new_hiscore.open()
                 #break from the loop
@@ -535,3 +531,4 @@ class CountriesQuiz(MDApp):
 
 # Running the app
 CountriesQuiz().run()
+

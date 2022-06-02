@@ -5,7 +5,7 @@
 
 #Predefined values for back buttons in quiz screens
 <MDIconButton>
-    icon: 'backspace-outline'
+    icon: 'arrow-left'
     pos_hint:{'center_y':0.55}
     on_press:app.reload_countries_list()
 
@@ -54,6 +54,7 @@ SManager:
             MDLabel:
                 text:"Countries Quiz App"
                 font_style:"H4"
+                font_size:self.width/10
             AnchorLayout:
                 anchor_x: 'center'
                 Image:
@@ -91,8 +92,9 @@ SManager:
             orientation:'vertical'
             size_hint_y:0.10
             MDLabel:
-                text:"Copyright© Wojciech Milczarek 2021"
+                text:"Copyright© Wojciech Milczarek 2022"
                 font_style:'Overline'
+                font_size:self.width/25
 
 
 
@@ -119,9 +121,11 @@ SManager:
         MDLabel:
             text:root.text
             font_style:"H6"
+            font_size:self.width/5.5
         MDLabel:
             text:root.subtext
             font_style:"Caption"
+            font_size:self.width/11
 
 
 
@@ -151,8 +155,8 @@ SManager:
                 MDTextFieldRound:
                     id: answer
                     pos_hint:{'center_x':0.5,'center_y':0.5}
-                    size_hint:(0.65,0.17)
-                    font_size:"32dp"
+                    size_hint:(0.8,0.1)
+                    font_size:self.width/13.5
                     halign:'center'
                     on_text_validate: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
                     
@@ -209,6 +213,7 @@ SManager:
                 MDLabel:
                     text:root.score
                     font_style:'Button'
+                    font_size:self.width/8
             MDCard:
                 score: root.score
                 md_bg_color: root.card_bg_color
@@ -216,6 +221,7 @@ SManager:
                 MDLabel:
                     text: root.correct_answers
                     font_style:'Button'
+                    font_size:self.width/8
             MDCard:
                 score: root.score
                 md_bg_color: root.card_bg_color
@@ -224,10 +230,19 @@ SManager:
                 MDLabel:
                     text: root.streak
                     font_style:'Button'
-    
-        MDLabel:
-            text: root.question
-            font_style:"H5"
+                    font_size:self.width/8
+            BoxLayout:
+                size_hint_x:0.05
+        BoxLayout:
+            BoxLayout:
+                size_hint_x:0.1    
+            MDLabel:
+                text: root.question
+                font_style:"H5"
+                font_size:self.width/20
+            BoxLayout:
+                size_hint_x:0.1    
+
 
 
 
@@ -332,6 +347,7 @@ SManager:
             text: root.mode_name
             font_style:"H6"
             pos_hint: {"center_x":0.54,"center_y":0.78}
+            font_size:self.width/20
 
 
 <HiScores>
@@ -355,6 +371,7 @@ SManager:
                     size_hint_y: 0.15
                     mode_name: 'Top 10 scores in capitals quiz mode'   
                     card_bg_color: (159/256,189/256,237/256,1)
+                    
                 MDBoxLayout:
                     size_hint: (0.9,0.8)
                     pos_hint:{'center_x':0.5,'center_y':0.55}
@@ -587,3 +604,4 @@ SManager:
                             MDLabel:
                                 id: co_pos10
                                 text:'0'
+
