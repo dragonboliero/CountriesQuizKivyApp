@@ -155,13 +155,14 @@ SManager:
                 MDLabel:
                     id:answer_popup
                     text_color: (25/255,30/255,45/255,1)
+                    font_size:self.width/20
                     text:"testing"
                     pos_hint:{'center_x':0.5,'center_y':0.65}
                     size_hint_x:0.65
                     size_hint_y:0.1
                     opacity:0
                     markup:True
-                    radius: [dp(25),dp(25),dp(25),dp(25)]
+                    radius: [dp(15),dp(15),dp(15),dp(15)]
 
                 MDTextFieldRound:
                     id: answer
@@ -275,7 +276,7 @@ SManager:
 
         GridLayout:
             rows: 4
-            size_hint_y: 0.8
+            size_hint_y: 0.7
             padding: [dp(20),dp(20),dp(20),dp(20)]
             spacing: dp(20)
             ImageButton:
@@ -295,6 +296,18 @@ SManager:
                 source:"data/flags/russia_flag-jpg-xs.jpg"
                 on_press: app.check_flag(3);
 
+        MDBoxLayout:
+            id:flags_forward
+            orientation:'vertical'
+            size_hint_y: 0.1
+            opacity:0
+            MDBottomAppBar:
+                id:flags_bottom_bar
+                disabled:True
+                MDToolbar:
+                    icon: 'forward'
+                    type: 'bottom'
+                    on_action_button:app.pick_flag();app.disable_flags_bottom_bar();
 
 
 <Continents>

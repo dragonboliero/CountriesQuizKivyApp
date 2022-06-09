@@ -36,7 +36,7 @@ countries_list = dt.data_from_csv(c_dict, countries_list)
 # This method makes device keyboard appear below main screen
 Window.softinput_mode = 'pan'
 #Resolution which simulates mobile phone
-#Window.size = (405,900)
+Window.size = (405,900)
 
 
 # ScreenManager and Screen classes
@@ -324,12 +324,32 @@ class CountriesQuiz(MDApp):
         print(f'Countries on the list: {chosen_countries}')
         #clear the list before ending the method        
         chosen_countries.clear()
+        #Make bottom bar button disabled
+        self.root.get_screen('FlagsScreen').ids.flags_bottom_bar.disabled = True
+        #Make tiles with flags clickable again
+        self.root.get_screen('FlagsScreen').ids.country0.disabled = False
+        self.root.get_screen('FlagsScreen').ids.country1.disabled = False
+        self.root.get_screen('FlagsScreen').ids.country2.disabled = False
+        self.root.get_screen('FlagsScreen').ids.country3.disabled = False
+        #Switch tiles color to default one
+        self.root.get_screen('FlagsScreen').ids.country0.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('FlagsScreen').ids.country1.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('FlagsScreen').ids.country2.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('FlagsScreen').ids.country3.md_bg_color = (159/256,189/256,237/256,1)
         return self.flag_chosen
-
+        
 
     '''Used only in flags quiz mode. Indice ranges are explained in 
        description of add_canswer and add_streak methods.'''
     def check_flag(self, image_number):
+        #Make bottom bar button enabled
+        self.root.get_screen('FlagsScreen').ids.flags_bottom_bar.disabled = False
+        #Make tiles with flags not clickable
+        self.root.get_screen('FlagsScreen').ids.country0.disabled = True
+        self.root.get_screen('FlagsScreen').ids.country1.disabled = True
+        self.root.get_screen('FlagsScreen').ids.country2.disabled = True
+        self.root.get_screen('FlagsScreen').ids.country3.disabled = True
+
         flag_clicked = self.jpg_file_name_to_country_name(image_number)
 
         if flag_clicked == self.flag_chosen.lower():
@@ -346,13 +366,45 @@ class CountriesQuiz(MDApp):
                 'FlagsScreen').ids.flag_toolbar.streak[15:]) + 1
             self.root.get_screen('FlagsScreen').ids.flag_toolbar.streak = self.root.get_screen(
                 'FlagsScreen').ids.flag_toolbar.streak[:15] + str(add_streak)
+            
+            if image_number == 0:
+                self.root.get_screen('FlagsScreen').ids.country0.md_bg_color = (0,1,0,1)
+            if image_number == 1:
+                self.root.get_screen('FlagsScreen').ids.country1.md_bg_color = (0,1,0,1)
+            if image_number == 2:
+                self.root.get_screen('FlagsScreen').ids.country2.md_bg_color = (0,1,0,1)
+            if image_number == 3:
+                self.root.get_screen('FlagsScreen').ids.country3.md_bg_color = (0,1,0,1)
+            self.root.get_screen('FlagsScreen').ids.flags_forward.opacity = 1
             print(add_ca)
         else:
+            #Change corect's answer background to green
+            if self.jpg_file_name_to_country_name(0) == self.flag_chosen.lower():
+                self.root.get_screen('FlagsScreen').ids.country0.md_bg_color = (0,1,0,1)
+            if self.jpg_file_name_to_country_name(1) == self.flag_chosen.lower():
+                self.root.get_screen('FlagsScreen').ids.country1.md_bg_color = (0,1,0,1)
+            if self.jpg_file_name_to_country_name(2) == self.flag_chosen.lower():
+                self.root.get_screen('FlagsScreen').ids.country2.md_bg_color = (0,1,0,1)
+            if self.jpg_file_name_to_country_name(3) == self.flag_chosen.lower():
+                self.root.get_screen('FlagsScreen').ids.country3.md_bg_color = (0,1,0,1)
+            #Change tile background color to red, depending on which was selected
+            if image_number == 0:
+                self.root.get_screen('FlagsScreen').ids.country0.md_bg_color = (1,0,0,1)
+            if image_number == 1:
+                self.root.get_screen('FlagsScreen').ids.country1.md_bg_color = (1,0,0,1)
+            if image_number == 2:
+                self.root.get_screen('FlagsScreen').ids.country2.md_bg_color = (1,0,0,1)
+            if image_number == 3:
+                self.root.get_screen('FlagsScreen').ids.country3.md_bg_color = (1,0,0,1)
+            #Make forward button visible
+            self.root.get_screen('FlagsScreen').ids.flags_forward.opacity = 1
             print('wrong answer')
             self.root.get_screen('FlagsScreen').ids.flag_toolbar.streak = self.root.get_screen(
                 'FlagsScreen').ids.flag_toolbar.streak[:15] + '0'
-        self.pick_flag()
 
+    '''Used only in flags quiz mode. Makes bottom bar invisible'''
+    def disable_flags_bottom_bar(self):
+        self.root.get_screen('FlagsScreen').ids.flags_forward.opacity = 0
 
     '''Used only in flags quiz mode. Converts currently displayed flags
        file paths to country names
