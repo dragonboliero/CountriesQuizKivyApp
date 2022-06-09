@@ -144,7 +144,7 @@ SManager:
             quiz_mode:'capitals' 
 
         GridLayout:
-            rows:3
+            rows:4
             size_hint_y:0.8
             FloatLayout:
                 ImageButton:
@@ -152,13 +152,26 @@ SManager:
                     source:"data/flags/poland_flag-jpg-xs.jpg"
                     size_hint: (0.4,0.2)
                     pos_hint:{'center_x':0.5,'center_y':0.85}
+                MDLabel:
+                    id:answer_popup
+                    text_color: (25/255,30/255,45/255,1)
+                    text:"testing"
+                    pos_hint:{'center_x':0.5,'center_y':0.65}
+                    size_hint_x:0.65
+                    size_hint_y:0.1
+                    opacity:0
+                    markup:True
+                    radius: [dp(25),dp(25),dp(25),dp(25)]
+
                 MDTextFieldRound:
                     id: answer
                     pos_hint:{'center_x':0.5,'center_y':0.5}
                     size_hint:(0.8,0.1)
                     font_size:self.width/13.5
                     halign:'center'
-                    on_text_validate: app.check_answer(); app.assign_country_to_label(0); app.assign_flag()
+                    on_text: app.disable_answer_popup();
+                    on_text_validate: app.check_answer(); app.assign_country_to_label(0); app.assign_flag();
+                    
                     
             MDBoxLayout:
                 orientation:'vertical'

@@ -36,7 +36,7 @@ countries_list = dt.data_from_csv(c_dict, countries_list)
 # This method makes device keyboard appear below main screen
 Window.softinput_mode = 'pan'
 #Resolution which simulates mobile phone
-Window.size = (405,900)
+#Window.size = (405,900)
 
 
 # ScreenManager and Screen classes
@@ -146,25 +146,20 @@ class CountriesQuiz(MDApp):
             self.add_streak(True)
             self.clear_answer_field()
             #Prompt displayed after correct answer
-            user_answer = Snackbar(
-                text="Congratulations, correct answer.",
-                snackbar_x="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.575},
-                bg_color=(0.2, 1, 0.3, 0.2),
-                font_size=self.root.width/26).open()
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.text = "[color=#f7faf8]Congratulations, correct answer.[/color]"
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.opacity = 1
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.md_bg_color = [55/256,209/255,21/255,1]
+
         else:
             print('Wrong answer')
             # Zero correct answer streak
             self.add_streak(False)
             self.clear_answer_field()
             #Prompt displayed after wrong answer
-            user_answer = Snackbar(
-                text=f"Wrong answer. It's {c_dict[self.country_name]['capital']}.",
-                snackbar_x="40dp",
-                snackbar_y="40dp",
-                pos_hint={'center_x': 0.5, 'center_y': 0.575},
-                bg_color=(1, 0, 0, 0.2),
-                font_size=self.root.width/26).open()
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.text = f"[color=#f7faf8]Wrong answer. The capital of {self.country_name} is {c_dict[self.country_name]['capital']}.[/color]"
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.opacity = 1
+            self.root.get_screen('CapitalsScreen').ids.answer_popup.md_bg_color = [219/256,20/255,20/255,1]
+            
 
 
     '''Multi-mode method adding points to user score.The indexing [7:] is 
@@ -211,6 +206,9 @@ class CountriesQuiz(MDApp):
     # Used only in capiatals quiz mode
     def clear_answer_field(self):
         self.root.get_screen('CapitalsScreen').ids.answer.text = ''
+    
+    def disable_answer_popup(self):
+        self.root.get_screen('CapitalsScreen').ids.answer_popup.opacity = 0
 
 
     '''Used only in capitals quiz mode. Increments number of correct user
