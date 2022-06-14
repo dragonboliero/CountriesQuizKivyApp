@@ -36,7 +36,7 @@ countries_list = dt.data_from_csv(c_dict, countries_list)
 # This method makes device keyboard appear below main screen
 Window.softinput_mode = 'pan'
 #Resolution which simulates mobile phone
-Window.size = (405,900)
+#Window.size = (405,900)
 
 
 # ScreenManager and Screen classes
@@ -437,6 +437,17 @@ class CountriesQuiz(MDApp):
        country name.
     '''
     def check_continent(self, image_number):
+        #Make continents bottom bar enabled and visible
+        self.root.get_screen('ContinentsScreen').ids.continents_bottom_bar.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.continents_forward.opacity = 1
+        #Disable continents tiles 
+        self.root.get_screen('ContinentsScreen').ids.africa.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.asia.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.europe.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.na.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.oceania.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.sa.disabled = True
+
         current_country = self.root.get_screen(
             'ContinentsScreen').ids.continents_toolbar.question
         current_country = current_country[24:-1]
@@ -466,6 +477,19 @@ class CountriesQuiz(MDApp):
         clicked_continent = clicked_continent[16:-4]
 
         if c_dict[current_country]['continent'] == clicked_continent:
+            #Make user selected continent tile bakcground green
+            if image_number == 0:
+                self.root.get_screen('ContinentsScreen').ids.africa.md_bg_color = (0,1,0,1)
+            if image_number == 1:
+                self.root.get_screen('ContinentsScreen').ids.asia.md_bg_color = (0,1,0,1)
+            if image_number == 2:
+                self.root.get_screen('ContinentsScreen').ids.europe.md_bg_color = (0,1,0,1)
+            if image_number == 3:
+                self.root.get_screen('ContinentsScreen').ids.na.md_bg_color = (0,1,0,1)
+            if image_number == 4:
+                self.root.get_screen('ContinentsScreen').ids.oceania.md_bg_color = (0,1,0,1)
+            if image_number == 5:
+                self.root.get_screen('ContinentsScreen').ids.sa.md_bg_color = (0,1,0,1)
             # Adding points in continents screen
             self.add_points(2)
             '''
@@ -488,10 +512,55 @@ class CountriesQuiz(MDApp):
                 'ContinentsScreen').ids.continents_toolbar.streak[:16] + str(current_streak)
             print('correct')
         else:
+            #Make selected continent tile red
+            if image_number == 0:
+                self.root.get_screen('ContinentsScreen').ids.africa.md_bg_color = (1,0,0,1)
+            if image_number == 1:
+                self.root.get_screen('ContinentsScreen').ids.asia.md_bg_color = (1,0,0,1)
+            if image_number == 2:
+                self.root.get_screen('ContinentsScreen').ids.europe.md_bg_color = (1,0,0,1)
+            if image_number == 3:
+                self.root.get_screen('ContinentsScreen').ids.na.md_bg_color = (1,0,0,1)
+            if image_number == 4:
+                self.root.get_screen('ContinentsScreen').ids.oceania.md_bg_color = (1,0,0,1)
+            if image_number == 5:
+                self.root.get_screen('ContinentsScreen').ids.sa.md_bg_color = (1,0,0,1)
+            #Set appropriate continent as green
+            if c_dict[current_country]['continent'] == 'Africa':
+               self.root.get_screen('ContinentsScreen').ids.africa.md_bg_color = (0,1,0,1) 
+            if c_dict[current_country]['continent'] == 'Asia':
+               self.root.get_screen('ContinentsScreen').ids.asia.md_bg_color = (0,1,0,1) 
+            if c_dict[current_country]['continent'] == 'Europe':
+               self.root.get_screen('ContinentsScreen').ids.europe.md_bg_color = (0,1,0,1)
+            if c_dict[current_country]['continent'] == 'North America':
+               self.root.get_screen('ContinentsScreen').ids.na.md_bg_color = (0,1,0,1)  
+            if c_dict[current_country]['continent'] == 'Oceania':
+               self.root.get_screen('ContinentsScreen').ids.oceania.md_bg_color = (0,1,0,1) 
+            if c_dict[current_country]['continent'] == 'South America':
+               self.root.get_screen('ContinentsScreen').ids.sa.md_bg_color = (0,1,0,1) 
+            #Reset current correct answer streak
             self.root.get_screen(
                 'ContinentsScreen').ids.continents_toolbar.streak = 'Current streak: 0'
             print('false')
 
+    def continents_postanswer(self):
+        #Make continents bottom bar disabled and invisible
+        self.root.get_screen('ContinentsScreen').ids.continents_bottom_bar.disabled = True
+        self.root.get_screen('ContinentsScreen').ids.continents_forward.opacity = 0
+        #Enable continents tiles 
+        self.root.get_screen('ContinentsScreen').ids.africa.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.asia.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.europe.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.na.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.oceania.disabled = False
+        self.root.get_screen('ContinentsScreen').ids.sa.disabled = False
+        #Revert tiles background to default color
+        self.root.get_screen('ContinentsScreen').ids.africa.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('ContinentsScreen').ids.asia.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('ContinentsScreen').ids.europe.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('ContinentsScreen').ids.na.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('ContinentsScreen').ids.oceania.md_bg_color = (159/256,189/256,237/256,1)
+        self.root.get_screen('ContinentsScreen').ids.sa.md_bg_color = (159/256,189/256,237/256,1)
 
     def check_if_hiscore(self,mode,user_score):
         #Load hiscores from the csv file
@@ -581,4 +650,3 @@ class CountriesQuiz(MDApp):
 
 # Running the app
 CountriesQuiz().run()
-

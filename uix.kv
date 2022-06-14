@@ -327,34 +327,46 @@ SManager:
         GridLayout:
             rows: 3
             columns: 2
-            size_hint_y: 0.8
+            size_hint_y: 0.7
             padding: [dp(20),dp(20),dp(20),dp(20)]
             spacing: dp(20)
 
             ImageButton:
                 id: africa
                 source:'data/continents/Africa.png' 
-                on_press: app.check_continent(0);app.assign_country_to_label(2)
+                on_press: app.check_continent(0)
             ImageButton:
                 id: asia
                 source:'data/continents/Asia.png'
-                on_press: app.check_continent(1);app.assign_country_to_label(2)
+                on_press: app.check_continent(1)
             ImageButton:
                 id: europe
                 source:'data/continents/Europe.png' 
-                on_press: app.check_continent(2);app.assign_country_to_label(2)
+                on_press: app.check_continent(2)
             ImageButton:
                 id: na
                 source:'data/continents/North America.png' 
-                on_press: app.check_continent(3);app.assign_country_to_label(2)
+                on_press: app.check_continent(3)
             ImageButton:
                 id: oceania
                 source:'data/continents/Oceania.png' 
-                on_press: app.check_continent(4);app.assign_country_to_label(2)
+                on_press: app.check_continent(4)
             ImageButton:
                 id: sa
                 source:'data/continents/South America.png' 
-                on_press: app.check_continent(5);app.assign_country_to_label(2)
+                on_press: app.check_continent(5)
+        MDBoxLayout:
+            id:continents_forward
+            orientation:'vertical'
+            size_hint_y: 0.1
+            opacity:0
+            MDBottomAppBar:
+                id:continents_bottom_bar
+                disabled:True
+                MDToolbar:
+                    icon: 'forward'
+                    type: 'bottom'
+                    on_action_button: app.continents_postanswer();app.assign_country_to_label(2);
 
 
 <HiScoreToolbar@MDCard>:
@@ -630,4 +642,3 @@ SManager:
                             MDLabel:
                                 id: co_pos10
                                 text:'0'
-
